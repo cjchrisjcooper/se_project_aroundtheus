@@ -1,0 +1,75 @@
+.page {
+  box-sizing: border-box;
+  min-width: 300px;
+  min-height: 100vh;
+  color: #fff;
+}
+
+.page__content {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding-top: 45px;
+  background-color: #000000;
+}
+
+.page__header {
+  max-width: 880px;
+  width: 100%;
+  /* min-height: 74px; */
+  margin: 45px auto 0;
+}
+
+.page__profile {
+  max-width: 880px;
+  width: 100%;
+  margin: 40px auto 0px;
+}
+
+.page__cards {
+  max-width: 880px;
+  width: 100%;
+  margin: 47px auto 0px;
+}
+
+.page__footer {
+  max-width: 880px;
+  width: 100%;
+  margin: 67px auto 60px;
+  text-align: start;
+}
+
+@media screen and (max-width: 530px) {
+  .page__profile {
+    max-width: 282px;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .page__footer {
+    max-width: 300px;
+  }
+}
+
+@media screen and (min-width: 530px) and (max-width: 634px) {
+  .page__cards {
+    max-width: 300px;
+    width: 100%;
+  }
+  .page__footer {
+    max-width: 300px;
+  }
+}
+
+@media screen and (min-width: 635px) and (max-width: 920px) {
+  .page__cards {
+    max-width: 800px;
+    width: 100%;
+  }
+  .page__footer {
+    max-width: 600px;
+  }
+}

@@ -1,0 +1,15 @@
+.header {
+  border-bottom: 1px solid rgba(84, 84, 84, 0.7);
+}
+
+.header__image {
+  margin: 0px 0px 41px;
+  max-width: 173px;
+  max-height: 33px;
+}
+
+@media screen and (max-width: 920px) {
+  .header__image {
+    margin: 0px 0px 41px 20px;
+  }
+}
