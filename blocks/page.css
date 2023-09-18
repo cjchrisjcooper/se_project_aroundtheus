@@ -17,7 +17,7 @@
 .page__header {
   max-width: 880px;
   width: 100%;
-  /* min-height: 74px; */
+  max-height: 74px;
   margin: 45px auto 0;
 }
 
@@ -49,25 +49,27 @@
     align-items: center;
   }
 
+  .page__cards {
+    margin: 36px auto 0px;
+  }
+
   .page__footer {
-    max-width: 300px;
+    margin: 48px auto 36px;
   }
 }
 
-@media screen and (min-width: 530px) and (max-width: 634px) {
-  .page__cards {
-    max-width: 300px;
-    width: 100%;
-  }
+@media screen and (max-width: 634px) {
   .page__footer {
     max-width: 300px;
+  }
+  .page__header {
+    max-height: 56px;
   }
 }
 
 @media screen and (min-width: 635px) and (max-width: 920px) {
   .page__cards {
     max-width: 800px;
-    width: 100%;
   }
   .page__footer {
     max-width: 600px;
