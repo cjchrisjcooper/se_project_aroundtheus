@@ -41,6 +41,12 @@
 }
 
 @media screen and (max-width: 530px) {
+  /* fixed the size of the header for mobile screens */
+  .page__header {
+    max-width: 320px;
+    margin: 28px auto 0;
+  }
+
   .page__profile {
     max-width: 282px;
     width: 100%;
@@ -61,9 +67,6 @@
 @media screen and (max-width: 634px) {
   .page__footer {
     max-width: 300px;
-  }
-  .page__header {
-    max-height: 56px;
   }
 }
 
