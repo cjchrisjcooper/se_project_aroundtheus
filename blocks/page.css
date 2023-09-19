@@ -13,11 +13,11 @@
   padding-top: 45px;
   background-color: #000000;
 }
-
+/* fixed the height of the header for desktop screens */
 .page__header {
   max-width: 880px;
   width: 100%;
-  max-height: 74px;
+  height: 74px;
   margin: 45px auto 0;
 }
 
@@ -41,9 +41,10 @@
 }
 
 @media screen and (max-width: 530px) {
-  /* fixed the size of the header for mobile screens */
+  /* fixed the height of the header for mobile screens */
   .page__header {
     max-width: 320px;
+    height: 56px;
     margin: 28px auto 0;
   }
 
