@@ -45,6 +45,10 @@
   padding: 19px;
 }
 
+.page__modal_disabled {
+  display: none;
+}
+
 .page__footer {
   max-width: 880px;
   width: 100%;
