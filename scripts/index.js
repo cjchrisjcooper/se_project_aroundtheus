@@ -45,18 +45,22 @@ const initialCards = [
   },
 ];
 
-function closeModal() {
-  editProfileModal.classList.add("page__modal_disabled");
+function openPopup(popup) {
+  popup.classList.add("modal_opened");
+}
+
+function closePopup(popup) {
+  popup.classList.remove("modal_opened");
 }
 
 editProfileButton.addEventListener("click", function () {
-  editProfileModal.classList.remove("page__modal_disabled");
+  openPopup(profileFormElement);
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
 });
 
 exitProfileButton.addEventListener("click", function () {
-  closeModal();
+  closePopup(profileFormElement);
 });
 
 //prevents defualt behavior of the form. also replaces profile values with the input values we passed in.
@@ -65,7 +69,7 @@ function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   profileName.textContent = nameInput.value;
   profileJob.textContent = jobInput.value;
-  closeModal();
+  closePopup(profileFormElement);
 }
 
 //an event listener of the form looking for when it gets submitted.
@@ -83,7 +87,7 @@ function getCardElement(cardData) {
   return cardElement;
 }
 
-for (let cardData of initialCards) {
+for (const cardData of initialCards) {
   const cardElement = getCardElement(cardData);
   cardsListElement.prepend(cardElement);
 }
