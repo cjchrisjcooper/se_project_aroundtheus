@@ -71,7 +71,7 @@
 }
 
 .modal_opened {
-  display: flex;
+  display: none;
 }
 
 @media screen and (max-width: 618px) {
