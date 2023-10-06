@@ -46,11 +46,11 @@ const initialCards = [
 ];
 
 function openPopup(popup) {
-  popup.classList.remove("modal_opened");
+  popup.classList.add("modal_opened");
 }
 
 function closePopup(popup) {
-  popup.classList.add("modal_opened");
+  popup.classList.remove("modal_opened");
 }
 
 editProfileButton.addEventListener("click", function () {
