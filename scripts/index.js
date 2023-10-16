@@ -3,7 +3,8 @@ const profileFormElement = document.querySelector(".modal");
 const formElement = profileFormElement.querySelector(".modal__form");
 const profileAddFormElement = document.querySelector(".form");
 const popupImageElement = document.querySelector(".image-popup__image");
-const popupImageContainerElement = document.querySelector(".page__image-popup");
+//const popupImageContainerElement = document.querySelector(".page__image-popup");
+const popupImageContainerElement = document.querySelector(".image-popup");
 const popupImageTextElement = document.querySelector(".image-popup__text");
 // find the form fields in the DOM
 const nameInput = profileFormElement.querySelector(".modal__input-title");
