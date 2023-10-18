@@ -34,9 +34,10 @@
           <p class="footer__copyright">&copy; 2022 Around The U.S.</p>
         </footer>
       </div>
-      <div class="modal page__modal">
+      <!-- edit Modal -->
+      <div class="modal page__modal" id="edit-modal">
         <div class="modal__container">
-          <form class="modal__form">
+          <form class="modal__form" id="edit-profile-form">
             <h2 class="modal__title">Edit Profile</h2>
             <input
               type="text"
@@ -55,33 +56,35 @@
           </form>
         </div>
       </div>
-      <div class="form page__form">
-        <div class="form__container">
-          <form class="form__form">
-            <h2 class="form__title">New Place</h2>
+      <!-- add card modal -->
+      <div class="modal page__modal" id="add-card-modal">
+        <div class="modal__container">
+          <form class="modal__form" id="add-card-form">
+            <h2 class="modal__title">New Place</h2>
             <input
               type="text"
-              class="form__input-title"
-              id="form__title"
+              class="modal__input-title modal__input_type_title"
+              id="addtitle"
               placeholder="Title"
             />
             <input
               type="text"
-              class="form__input-Img"
-              id="form__Description"
-              placeholder="Image link"
+              class="modal__input-description modal__input_type_url"
+              id="url"
+              placeholder="Image Link"
             />
-            <button class="form__save-button">Create</button>
-            <button class="form__close-button"></button>
+            <button class="modal__save-button">Create</button>
+            <button class="modal__close-button"></button>
           </form>
         </div>
       </div>
     </div>
-    <div class="image-popup">
-      <div class="image-popup__container">
-        <img src="#" alt="" class="image-popup__image" />
-        <p class="image-popup__text"></p>
-        <button class="image-popup__close-button"></button>
+    <!-- image modal -->
+    <div class="modal image-modal" id="image-modal">
+      <div class="image-modal__container">
+        <img src="#" alt="" class="image-modal__image-element" />
+        <p class="image-modal__text"></p>
+        <button class="modal__close-button"></button>
       </div>
     </div>
     <template id="card-template">

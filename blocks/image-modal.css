@@ -1,4 +1,4 @@
-.image-popup {
+.image-modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -15,7 +15,7 @@
   transition: visibility 0s linear 0.5s, opacity 0.5s linear;
 }
 
-.image-popup__container {
+.image-modal__container {
   border-radius: 10px;
   opacity: 1;
   position: relative;
@@ -24,13 +24,13 @@
   margin: 0px 30px 0px;
 }
 
-.image-popup__image {
+.image-modal__image-element {
   max-width: 810px;
   max-height: 580px;
   width: 100%;
 }
 
-.image-popup__text {
+.image-modal__text {
   color: #fff;
   font-family: Inter, sans-serif;
   font-size: 12px;
@@ -40,27 +40,7 @@
   margin: 10px 0 0;
 }
 
-.image-popup__close-button {
-  background-image: url("../images/Close\ Icon.svg");
-  border: none;
-  background-color: transparent;
-  background-size: contain;
-  background-repeat: no-repeat;
-  width: 40px;
-  height: 40px;
-  padding: 0;
-  position: absolute;
-  bottom: calc(100% + 5px);
-  left: calc(100% + 5px);
-  cursor: pointer;
-  transition: opacity 1s linear 0s;
-}
-
-.image-popup__close-button:hover {
-  opacity: 0.6;
-}
-
-.image-popup_opened {
+.modal_opened {
   display: flex;
   visibility: visible;
   opacity: 1;
@@ -68,11 +48,7 @@
 }
 
 @media screen and (max-width: 500px) {
-  .image-popup__close-button {
-    height: 26px;
-    width: 26px;
-  }
-  .image-popup__image {
+  .image-modal__image-element {
     max-width: 240px;
     max-height: 299px;
     width: 100%;

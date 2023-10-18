@@ -48,7 +48,7 @@
   transition: visibility 0s linear 0.5s, opacity 0.5s linear;
 }
 
-.page__image-popup {
+/* .image-modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -63,7 +63,7 @@
   justify-content: center;
   padding: 19px;
   transition: visibility 0s linear 0.5s, opacity 0.5s linear;
-}
+} */
 
 .page__form {
   position: fixed;
