@@ -26,10 +26,10 @@ const cardsListElement = document.querySelector(".cards__list");
 const addCardButton = document.querySelector(".profile__add-button");
 //all the input fields fromm the add card modal
 const addCardTitleInput = profileAddFormModal.querySelector(
-  ".modal__input_type_title"
+  ".modal__input-title_type_title"
 );
 const addCardImgUrlInput = profileAddFormModal.querySelector(
-  ".modal__input_type_url"
+  ".modal__input-description_type_url"
 );
 //get all the image modal buttons
 const imageModal = document.querySelector(".image-modal");
