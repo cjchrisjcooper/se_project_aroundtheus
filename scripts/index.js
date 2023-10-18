@@ -1,7 +1,7 @@
 // finding all the modal elements in the DOM
 const editProfilemodal = document.querySelector("#edit-modal");
-const formElement = editProfilemodal.querySelector(".modal__form");
-const profileAddFormModal = document.querySelector("#add-card-modal");
+const editProfileFormElement = editProfilemodal.querySelector(".modal__form");
+const addCardModal = document.querySelector("#add-card-modal");
 // find the form fields in the DOM
 const nameInput = editProfilemodal.querySelector(".modal__input-title");
 const jobInput = editProfilemodal.querySelector(".modal__input-description");
@@ -13,9 +13,7 @@ const editProfileButton = document.querySelector(".profile__edit-button");
 const exitEditProfileButton = editProfilemodal.querySelector(
   ".modal__close-button"
 );
-const exitaddCardButton = profileAddFormModal.querySelector(
-  ".modal__close-button"
-);
+const exitaddCardButton = addCardModal.querySelector(".modal__close-button");
 
 //card template element
 const cardTemplate =
@@ -25,17 +23,17 @@ const cardsListElement = document.querySelector(".cards__list");
 //grabbing the add button in the profile section
 const addCardButton = document.querySelector(".profile__add-button");
 //all the input fields fromm the add card modal
-const addCardTitleInput = profileAddFormModal.querySelector(
+const addCardTitleInput = addCardModal.querySelector(
   ".modal__input-title_type_title"
 );
-const addCardImgUrlInput = profileAddFormModal.querySelector(
+const addCardImgUrlInput = addCardModal.querySelector(
   ".modal__input-description_type_url"
 );
 //get all the image modal buttons
 const imageModal = document.querySelector(".image-modal");
 const imageModalCloseButton = imageModal.querySelector(".modal__close-button");
 const popupImageElement = document.querySelector(".image-modal__image-element");
-const ImageModalContainerElement = document.querySelector(
+const imageModalContainerElement = document.querySelector(
   ".image-modal__container"
 );
 const popupImageTextElement = document.querySelector(".image-modal__text");
@@ -78,7 +76,7 @@ function closeModal(popup) {
 }
 
 addCardButton.addEventListener("click", function () {
-  openModal(profileAddFormModal);
+  openModal(addCardModal);
 });
 
 editProfileButton.addEventListener("click", function () {
@@ -88,27 +86,24 @@ editProfileButton.addEventListener("click", function () {
 });
 
 exitEditProfileButton.addEventListener("click", function (evt) {
-  evt.preventDefault();
   closeModal(editProfilemodal);
 });
 
 exitaddCardButton.addEventListener("click", function (evt) {
-  evt.preventDefault();
-  closeModal(profileAddFormModal);
+  closeModal(addCardModal);
 });
 
 imageModalCloseButton.addEventListener("click", function (evt) {
-  evt.preventDefault();
   console.log("close button being pressed");
   closeModal(imageModal);
 });
 
 //when the user submits the add-card modal, it will create a card and add it to the beginnnig of the card list element.
-profileAddFormModal.addEventListener("submit", handleAddCardFormSubmit);
+addCardModal.addEventListener("submit", handleAddCardFormSubmit);
 
 //an event listener of the form looking for when it gets submitted.
 //We will call the handleEditProfileFormSubmit() function when this event happens.
-formElement.addEventListener("submit", handleEditProfileFormSubmit);
+editProfileFormElement.addEventListener("submit", handleEditProfileFormSubmit);
 
 //this function will take the input fields of the form and create a card out of it.
 function handleAddCardFormSubmit(evt) {
@@ -118,7 +113,9 @@ function handleAddCardFormSubmit(evt) {
     link: addCardImgUrlInput.value,
   };
   renderCard(cardData);
-  closeModal(profileAddFormModal);
+  addCardTitleInput.value = "";
+  addCardImgUrlInput.value = "";
+  closeModal(addCardModal);
 }
 
 //prevents defualt behavior of the form. also replaces profile values with the input values we passed in.
@@ -154,6 +151,7 @@ function getCardElement(cardData) {
     console.log("image is being clicked");
     openModal(imageModal);
     popupImageElement.setAttribute("src", cardData.link);
+    popupImageElement.setAttribute("alt", cardData.name);
     popupImageTextElement.textContent = cardData.name;
   });
   //set the data in the card to the object data in our collection
