@@ -2,6 +2,10 @@
 const editProfilemodal = document.querySelector("#edit-modal");
 const editProfileFormElement = editProfilemodal.querySelector(".modal__form");
 const addCardModal = document.querySelector("#add-card-modal");
+const addCardModalSubmitButton = addCardModal.querySelector(
+  ".modal__save-button"
+);
+const modalOverlays = document.querySelectorAll(".modal");
 // find the form fields in the DOM
 const nameInput = editProfilemodal.querySelector(".modal__input-title");
 const jobInput = editProfilemodal.querySelector(".modal__input-description");
@@ -75,6 +79,12 @@ function closeModal(popup) {
   popup.classList.remove("modal_opened");
 }
 
+document.addEventListener("keydown", (evt) => {
+  if (evt.key === "Escape") {
+    closeAllModals();
+  }
+});
+
 addCardButton.addEventListener("click", function () {
   openModal(addCardModal);
 });
@@ -94,8 +104,25 @@ exitaddCardButton.addEventListener("click", function (evt) {
 });
 
 imageModalCloseButton.addEventListener("click", function (evt) {
-  console.log("close button being pressed");
   closeModal(imageModal);
+});
+
+addCardModal.addEventListener("click", (evt) => {
+  if (evt.target.classList.contains("modal")) {
+    closeModal(addCardModal);
+  }
+});
+
+editProfilemodal.addEventListener("click", (evt) => {
+  if (evt.target.classList.contains("modal")) {
+    closeModal(editProfilemodal);
+  }
+});
+
+imageModal.addEventListener("click", (evt) => {
+  if (evt.target.classList.contains("modal")) {
+    closeModal(imageModal);
+  }
 });
 
 //when the user submits the add-card modal, it will create a card and add it to the beginnnig of the card list element.
@@ -115,6 +142,8 @@ function handleAddCardFormSubmit(evt) {
   renderCard(cardData);
   addCardTitleInput.value = "";
   addCardImgUrlInput.value = "";
+  addCardModalSubmitButton.classList.add("modal__button_disabled");
+
   closeModal(addCardModal);
 }
 
@@ -159,6 +188,12 @@ function getCardElement(cardData) {
   cardImageEL.setAttribute("alt", cardData.name);
   cardTitleEL.textContent = cardData.name;
   return cardElement;
+}
+
+function closeAllModals() {
+  closeModal(addCardModal);
+  closeModal(editProfilemodal);
+  closeModal(imageModal);
 }
 
 // loops
