@@ -73,17 +73,16 @@ const initialCards = [
 
 function openModal(popup) {
   popup.classList.add("modal_opened");
+  document.removeEventListener("keydown", (evt) => {
+    if (evt.key === "Escape") {
+      closeModal(popup);
+    }
+  });
 }
 
 function closeModal(popup) {
   popup.classList.remove("modal_opened");
 }
-
-document.addEventListener("keydown", (evt) => {
-  if (evt.key === "Escape") {
-    closeAllModals();
-  }
-});
 
 addCardButton.addEventListener("click", function () {
   openModal(addCardModal);
@@ -142,7 +141,7 @@ function handleAddCardFormSubmit(evt) {
   renderCard(cardData);
   addCardTitleInput.value = "";
   addCardImgUrlInput.value = "";
-  addCardModalSubmitButton.classList.add("modal__button_disabled");
+  //addCardModalSubmitButton.classList.add("modal__button_disabled");
 
   closeModal(addCardModal);
 }
@@ -188,12 +187,6 @@ function getCardElement(cardData) {
   cardImageEL.setAttribute("alt", cardData.name);
   cardTitleEL.textContent = cardData.name;
   return cardElement;
-}
-
-function closeAllModals() {
-  closeModal(addCardModal);
-  closeModal(editProfilemodal);
-  closeModal(imageModal);
 }
 
 // loops

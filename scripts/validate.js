@@ -27,14 +27,14 @@ function checkInputValidity(formEl, inputEl, options) {
   }
 }
 
-function submitButtonInActive(submitButton, options) {
-  console.log("submitButtonInActive is being called");
+function TurnButtonInActive(submitButton, options) {
+  console.log("TurnButtonInActive is being called");
   submitButton.classList.add(options.inactiveButtonClass);
   submitButton.disabled = true;
 }
 
-function submitButtonActive(submitButton, options) {
-  console.log("submitButtonActive is being called");
+function TurnButtonActive(submitButton, options) {
+  console.log("TurnButtonActive is being called");
   submitButton.classList.remove(options.inactiveButtonClass);
   submitButton.disabled = false;
 }
@@ -45,15 +45,16 @@ function hasInvalidOutput(inputList) {
 
 function toggleButtonState(inputEls, submitButton, options) {
   if (hasInvalidOutput(inputEls)) {
-    submitButtonInActive(submitButton, options);
+    TurnButtonInActive(submitButton, options);
   } else {
-    submitButtonActive(submitButton, options);
+    TurnButtonActive(submitButton, options);
   }
 }
 
 const setEventListeners = (formEl, options) => {
   const inputEls = [...formEl.querySelectorAll(options.inputSelector)];
-  const submitButton = formEl.querySelector(".modal__save-button");
+  const submitButton = formEl.querySelector(options.submitButtonSelector);
+  toggleButtonState(inputEls, submitButton, options);
   inputEls.forEach((inputEl) => {
     inputEl.addEventListener("input", (evt) => {
       checkInputValidity(formEl, inputEl, options);
@@ -63,7 +64,7 @@ const setEventListeners = (formEl, options) => {
 };
 
 const enableValidation = (options) => {
-  const formsEls = [...document.querySelectorAll(".modal__form")];
+  const formsEls = [...document.querySelectorAll(options.formSelector)];
   formsEls.forEach((formEl) => {
     formEl.addEventListener("submit", (evt) => {
       evt.preventDefault();
