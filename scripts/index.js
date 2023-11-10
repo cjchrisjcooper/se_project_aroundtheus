@@ -71,11 +71,15 @@ const initialCards = [
   },
 ];
 
+//listener is added when the modal is opened, and is removed when the user presses the escape key and closes the modal
 function openModal(popup) {
   popup.classList.add("modal_opened");
-  document.removeEventListener("keydown", (evt) => {
+  document.addEventListener("keydown", function closeOnEscape(evt) {
+    console.log("Escape function is being called");
     if (evt.key === "Escape") {
       closeModal(popup);
+
+      document.removeEventListener("keydown", closeOnEscape);
     }
   });
 }

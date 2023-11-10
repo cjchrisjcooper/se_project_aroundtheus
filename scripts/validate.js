@@ -27,13 +27,13 @@ function checkInputValidity(formEl, inputEl, options) {
   }
 }
 
-function TurnButtonInActive(submitButton, options) {
+function turnButtonInActive(submitButton, options) {
   console.log("TurnButtonInActive is being called");
   submitButton.classList.add(options.inactiveButtonClass);
   submitButton.disabled = true;
 }
 
-function TurnButtonActive(submitButton, options) {
+function turnButtonActive(submitButton, options) {
   console.log("TurnButtonActive is being called");
   submitButton.classList.remove(options.inactiveButtonClass);
   submitButton.disabled = false;
@@ -45,9 +45,9 @@ function hasInvalidOutput(inputList) {
 
 function toggleButtonState(inputEls, submitButton, options) {
   if (hasInvalidOutput(inputEls)) {
-    TurnButtonInActive(submitButton, options);
+    turnButtonInActive(submitButton, options);
   } else {
-    TurnButtonActive(submitButton, options);
+    turnButtonActive(submitButton, options);
   }
 }
 
