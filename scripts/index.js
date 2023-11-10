@@ -72,8 +72,8 @@ const initialCards = [
 ];
 
 function closeOnEscape(e) {
-  const openModal = document.querySelector(".modal_opened");
   if (e.key === "Escape") {
+    const openModal = document.querySelector(".modal_opened");
     closeModal(openModal);
   }
 }
