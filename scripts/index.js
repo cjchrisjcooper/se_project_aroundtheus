@@ -71,21 +71,23 @@ const initialCards = [
   },
 ];
 
-//listener is added when the modal is opened, and is removed when the user presses the escape key and closes the modal
-function openModal(popup) {
-  popup.classList.add("modal_opened");
-  document.addEventListener("keydown", function closeOnEscape(evt) {
-    console.log("Escape function is being called");
-    if (evt.key === "Escape") {
-      closeModal(popup);
-
-      document.removeEventListener("keydown", closeOnEscape);
-    }
-  });
+function closeOnEscape(e) {
+  const openModal = document.querySelector(".modal_opened");
+  if (e.key === "Escape") {
+    closeModal(openModal);
+  }
 }
 
+//listener is added when the modal is opened.
+function openModal(popup) {
+  popup.classList.add("modal_opened");
+  document.addEventListener("keydown", closeOnEscape);
+}
+
+//listener is removed when the modal is closed.
 function closeModal(popup) {
   popup.classList.remove("modal_opened");
+  document.removeEventListener("keydown", closeOnEscape);
 }
 
 addCardButton.addEventListener("click", function () {
