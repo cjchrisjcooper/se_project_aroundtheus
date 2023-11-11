@@ -8,7 +8,8 @@
 
 **Intro**
 
-This project is made so all the elements are displayed correctly on popular screen sizes. We recommend investing more time in completing this project, since it's more difficult than previous ones.
+This project is made so all the elements are displayed correctly on popular screen sizes. This page also allows you to edit the main and add a new card with a location along with with an image.
+Recently I have used my javascript skills to add form validation to the webpage.
 
 **Figma**
 
