@@ -1,11 +1,10 @@
+import Card from "../Components/Card.js";
+import FormValidator from "../Components/FormValidator.js";
+console.log("This file is working");
 // finding all the modal elements in the DOM
 const editProfilemodal = document.querySelector("#edit-modal");
 const editProfileFormElement = editProfilemodal.querySelector(".modal__form");
 const addCardModal = document.querySelector("#add-card-modal");
-const addCardModalSubmitButton = addCardModal.querySelector(
-  ".modal__save-button"
-);
-const modalOverlays = document.querySelectorAll(".modal");
 // find the form fields in the DOM
 const nameInput = editProfilemodal.querySelector(".modal__input-title");
 const jobInput = editProfilemodal.querySelector(".modal__input-description");
@@ -19,11 +18,6 @@ const exitEditProfileButton = editProfilemodal.querySelector(
 );
 const exitaddCardButton = addCardModal.querySelector(".modal__close-button");
 
-//card template element
-const cardTemplate =
-  document.querySelector("#card-template").content.firstElementChild;
-//This is the element where we will place alll of our cards
-const cardsListElement = document.querySelector(".cards__list");
 //grabbing the add button in the profile section
 const addCardButton = document.querySelector(".profile__add-button");
 //all the input fields fromm the add card modal
@@ -36,12 +30,6 @@ const addCardImgUrlInput = addCardModal.querySelector(
 //get all the image modal buttons
 const imageModal = document.querySelector(".image-modal");
 const imageModalCloseButton = imageModal.querySelector(".modal__close-button");
-const popupImageElement = document.querySelector(".image-modal__image-element");
-const imageModalContainerElement = document.querySelector(
-  ".image-modal__container"
-);
-const popupImageTextElement = document.querySelector(".image-modal__text");
-
 //list of our cards that we will plug into the html
 
 const initialCards = [
@@ -71,6 +59,15 @@ const initialCards = [
   },
 ];
 
+const config = {
+  formSelector: ".modal__form",
+  inputSelector: ".modal__input",
+  submitButtonSelector: ".modal__save-button",
+  inactiveButtonClass: "modal__button_disabled",
+  inputErrorClass: "modal__input_type_error",
+  errorClass: "modal__error_visible",
+};
+
 function closeOnEscape(e) {
   if (e.key === "Escape") {
     const openModal = document.querySelector(".modal_opened");
@@ -92,12 +89,18 @@ function closeModal(popup) {
 
 addCardButton.addEventListener("click", function () {
   openModal(addCardModal);
+  const addCardForm = document.querySelector("#add-card-form");
+  const addCardFormValidator = new FormValidator(config, addCardForm);
+  addCardFormValidator.enableValidation();
 });
 
 editProfileButton.addEventListener("click", function () {
   openModal(editProfilemodal);
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
+  const editProfileForm = document.querySelector("#edit-profile-form");
+  const editFormValidator = new FormValidator(config, editProfileForm);
+  editFormValidator.enableValidation();
 });
 
 exitEditProfileButton.addEventListener("click", function (evt) {
@@ -144,10 +147,10 @@ function handleAddCardFormSubmit(evt) {
     name: addCardTitleInput.value,
     link: addCardImgUrlInput.value,
   };
-  renderCard(cardData);
+  const newCard = new Card(cardData, "#card-template", ".cards__list");
+  newCard.getView();
   addCardTitleInput.value = "";
   addCardImgUrlInput.value = "";
-  //addCardModalSubmitButton.classList.add("modal__button_disabled");
 
   closeModal(addCardModal);
 }
@@ -161,42 +164,8 @@ function handleEditProfileFormSubmit(evt) {
   closeModal(editProfilemodal);
 }
 
-//the function creates a card and adds it to the beginnnig of the card list element.
-function renderCard(cardData) {
-  const cardElement = getCardElement(cardData);
-  cardsListElement.prepend(cardElement);
-}
-
-//this function will clone the template and fill in the template elements with the values from our list
-function getCardElement(cardData) {
-  const cardElement = cardTemplate.cloneNode(true);
-  const cardImageEL = cardElement.querySelector(".card__image");
-  const cardTitleEL = cardElement.querySelector(".card__title");
-  const cardLikeButtonEl = cardElement.querySelector(".card__like-button");
-  const cardDeleteButtonEl = cardElement.querySelector(".card__delete-button");
-  //add an event listener to the card will toggle the element between dark and light when the user clicks on it
-  cardLikeButtonEl.addEventListener("click", () => {
-    cardLikeButtonEl.classList.toggle("card__like-button_active");
-  });
-  cardDeleteButtonEl.addEventListener("click", () => {
-    cardElement.remove();
-  });
-  cardImageEL.addEventListener("click", function () {
-    console.log("image is being clicked");
-    openModal(imageModal);
-    popupImageElement.setAttribute("src", cardData.link);
-    popupImageElement.setAttribute("alt", cardData.name);
-    popupImageTextElement.textContent = cardData.name;
-  });
-  //set the data in the card to the object data in our collection
-  cardImageEL.setAttribute("src", cardData.link);
-  cardImageEL.setAttribute("alt", cardData.name);
-  cardTitleEL.textContent = cardData.name;
-  return cardElement;
-}
-
-// loops
-
+//creating all the cards using a loop and the card class
 initialCards.forEach((cardData) => {
-  renderCard(cardData);
+  const card = new Card(cardData, "#card-template", ".cards__list");
+  card.getView();
 });
