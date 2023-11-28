@@ -16,7 +16,7 @@ const editProfileButton = document.querySelector(".profile__edit-button");
 const exitEditProfileButton = editProfilemodal.querySelector(
   ".modal__close-button"
 );
-const exitaddCardButton = addCardModal.querySelector(".modal__close-button");
+const exitAddCardButton = addCardModal.querySelector(".modal__close-button");
 
 //grabbing the add button in the profile section
 const addCardButton = document.querySelector(".profile__add-button");
@@ -110,7 +110,7 @@ exitEditProfileButton.addEventListener("click", function (evt) {
   closeModal(editProfilemodal);
 });
 
-exitaddCardButton.addEventListener("click", function (evt) {
+exitAddCardButton.addEventListener("click", function (evt) {
   closeModal(addCardModal);
 });
 
@@ -138,8 +138,8 @@ function handleAddCardFormSubmit(evt) {
     name: addCardTitleInput.value,
     link: addCardImgUrlInput.value,
   };
-  const newCard = new Card(cardData, "#card-template", ".cards__list");
-  newCard.getView();
+  const newCard = createCard(cardData);
+  renderCard(newCard, ".cards__list");
   addCardTitleInput.value = "";
   addCardImgUrlInput.value = "";
   addCardFormValidator.toggleButtonState();

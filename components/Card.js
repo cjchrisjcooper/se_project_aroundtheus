@@ -12,14 +12,14 @@ export default class Card {
     //.card__like-button
     const likeButton = this._cardElement.querySelector(".card__like-button");
     likeButton.addEventListener("click", () => {
-      this._handleLikeButton(likeButton);
+      this._handleLikeButton();
     });
     //.card__delete-button
     const deleteButton = this._cardElement.querySelector(
       ".card__delete-button"
     );
     deleteButton.addEventListener("click", () => {
-      this._handleDeleteButton(this._cardElement);
+      this._handleDeleteButton();
     });
     //.card__image
     const cardImage = this._cardElement.querySelector(".card__image");
@@ -28,14 +28,13 @@ export default class Card {
     });
   }
 
-  _handleDeleteButton(cardElement) {
-    cardElement.remove();
-    cardElement = null;
+  _handleDeleteButton() {
+    this._cardElement.remove();
+    this._cardElement = null;
   }
 
-  _handleLikeButton(likebutton) {
-    console.log("this function is being called");
-    likebutton.classList.toggle("card__like-button_active");
+  _handleLikeButton() {
+    this.likeButton.classList.toggle("card__like-button_active");
   }
 
   getView() {
@@ -45,6 +44,7 @@ export default class Card {
     this._cardElement = cardTemplate.cloneNode(true);
     const cardImageElement = this._cardElement.querySelector(".card__image");
     const cardTitleElement = this._cardElement.querySelector(".card__title");
+    this.likeButton = this._cardElement.querySelector(".card__like-button");
     //use private method set event listeners
     this._setEventListeners(this._cardElement);
     //set the elements in hte card element to the properties of this class
