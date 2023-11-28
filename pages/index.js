@@ -1,5 +1,5 @@
-import Card from "../Components/Card.js";
-import FormValidator from "../Components/FormValidator.js";
+import Card from "../components/Card.js";
+import FormValidator from "../components/FormValidator.js";
 console.log("This file is working");
 // finding all the modal elements in the DOM
 const editProfilemodal = document.querySelector("#edit-modal");
@@ -75,6 +75,15 @@ function closeOnEscape(e) {
   }
 }
 
+function closeModalOnClick(evt) {
+  if (
+    evt.target === evt.currentTarget ||
+    evt.target.classList.contains("modal")
+  ) {
+    closeModal(evt.target);
+  }
+}
+
 //listener is added when the modal is opened.
 function openModal(popup) {
   popup.classList.add("modal_opened");
@@ -89,18 +98,12 @@ function closeModal(popup) {
 
 addCardButton.addEventListener("click", function () {
   openModal(addCardModal);
-  const addCardForm = document.querySelector("#add-card-form");
-  const addCardFormValidator = new FormValidator(config, addCardForm);
-  addCardFormValidator.enableValidation();
 });
 
 editProfileButton.addEventListener("click", function () {
   openModal(editProfilemodal);
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
-  const editProfileForm = document.querySelector("#edit-profile-form");
-  const editFormValidator = new FormValidator(config, editProfileForm);
-  editFormValidator.enableValidation();
 });
 
 exitEditProfileButton.addEventListener("click", function (evt) {
@@ -121,17 +124,9 @@ addCardModal.addEventListener("click", (evt) => {
   }
 });
 
-editProfilemodal.addEventListener("click", (evt) => {
-  if (evt.target.classList.contains("modal")) {
-    closeModal(editProfilemodal);
-  }
-});
+editProfilemodal.addEventListener("mousedown", closeModalOnClick);
 
-imageModal.addEventListener("click", (evt) => {
-  if (evt.target.classList.contains("modal")) {
-    closeModal(imageModal);
-  }
-});
+imageModal.addEventListener("mousedown", closeModalOnClick);
 
 //when the user submits the add-card modal, it will create a card and add it to the beginnnig of the card list element.
 addCardModal.addEventListener("submit", handleAddCardFormSubmit);
@@ -151,7 +146,7 @@ function handleAddCardFormSubmit(evt) {
   newCard.getView();
   addCardTitleInput.value = "";
   addCardImgUrlInput.value = "";
-
+  addCardFormValidator.toggleButtonState();
   closeModal(addCardModal);
 }
 
@@ -164,8 +159,36 @@ function handleEditProfileFormSubmit(evt) {
   closeModal(editProfilemodal);
 }
 
+function renderCard(card, cardLocation) {
+  const cardsListElement = document.querySelector(cardLocation);
+  cardsListElement.prepend(card.getView());
+  console.log("render card is being called");
+}
+
+function handleImageClick(cardData) {
+  //TODO: open the image modal and pass in the current image data to the image modal
+  const imageModal = document.querySelector(".image-modal");
+  const popupImageElement = document.querySelector(
+    ".image-modal__image-element"
+  );
+  const popupImageTextElement = document.querySelector(".image-modal__text");
+
+  popupImageElement.setAttribute("src", cardData.link);
+  popupImageElement.setAttribute("alt", cardData.name);
+  popupImageTextElement.textContent = cardData.name;
+
+  openModal(imageModal);
+}
+
 //creating all the cards using a loop and the card class
 initialCards.forEach((cardData) => {
-  const card = new Card(cardData, "#card-template", ".cards__list");
-  card.getView();
+  const card = new Card(cardData, "#card-template");
+  renderCard(card, ".cards__list", handleImageClick);
 });
+
+const addCardForm = document.querySelector("#add-card-form");
+const addCardFormValidator = new FormValidator(config, addCardForm);
+addCardFormValidator.enableValidation();
+const editProfileForm = document.querySelector("#edit-profile-form");
+const editFormValidator = new FormValidator(config, editProfileForm);
+editFormValidator.enableValidation();

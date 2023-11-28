@@ -55,6 +55,14 @@
   padding: 14px 0px 18px;
 }
 
+.modal__save-button:hover {
+  cursor: pointer;
+}
+
+.modal__save-button:disabled {
+  cursor: default;
+}
+
 .modal__close-button {
   background-image: url("../images/Close\ Icon.svg");
   border: none;

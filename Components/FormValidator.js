@@ -18,32 +18,30 @@ export default class FormValidator {
     errorEl.classList.remove(this._errorClass);
   }
 
-  _showInputError(inputElement, errorMessage) {
+  _showInputError(inputElement) {
     const errorEl = document.querySelector(`#${inputElement.id}-error`);
     //give the inputEl the error class
     inputElement.classList.add(this._inputErrorClass);
     //give the errorEl the error message
+    const errorMessage = inputElement.validationMessage;
     errorEl.textContent = errorMessage;
     errorEl.classList.add(this._errorClass);
   }
 
   _checkInputValidity(inputEl) {
     if (!inputEl.validity.valid) {
-      const errorMessage = inputEl.validationMessage;
-      this._showInputError(inputEl, errorMessage);
+      this._showInputError(inputEl);
     } else {
       this._hideInputError(inputEl);
     }
   }
 
   _turnButtonActive() {
-    console.log("TurnButtonActive is being called");
     this._submitButton.classList.remove(this._inactiveButtonClass);
     this._submitButton.disabled = false;
   }
 
   _turnButtonInActive() {
-    console.log("TurnButtonInActive is being called");
     this._submitButton.classList.add(this._inactiveButtonClass);
     this._submitButton.disabled = true;
   }
@@ -52,7 +50,7 @@ export default class FormValidator {
     return !this._inputEls.every((inputEl) => inputEl.validity.valid);
   }
 
-  _toggleButtonState() {
+  toggleButtonState() {
     if (this._hasInvalidOutput()) {
       this._turnButtonInActive();
     } else {
@@ -67,11 +65,11 @@ export default class FormValidator {
     this._submitButton = this._formElement.querySelector(
       this._submitButtonSelector
     );
-    this._toggleButtonState();
+    this.toggleButtonState();
     this._inputEls.forEach((inputEl) => {
       inputEl.addEventListener("input", (evt) => {
         this._checkInputValidity(inputEl);
-        this._toggleButtonState(this._inputEls, this._submitButton);
+        this.toggleButtonState(this._inputEls, this._submitButton);
       });
     });
   }
@@ -79,7 +77,7 @@ export default class FormValidator {
   enableValidation() {
     console.log("this function is being called");
     this._formElement.addEventListener("submit", (evt) => {
-      this._toggleButtonState();
+      this.toggleButtonState();
       evt.preventDefault();
     });
     this._setEventListeners();
