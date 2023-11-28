@@ -1,3 +1,5 @@
+//"Components" has been renamed to "components in github"
+//my computer throws an error when I import in "index.js"
 export default class Card {
   constructor(data, cardSelector, handleImageClick) {
     this.name = data.name;
