@@ -10,49 +10,31 @@ export default class Card {
     //.card__like-button
     const likeButton = this._cardElement.querySelector(".card__like-button");
     likeButton.addEventListener("click", () => {
-      this._handlelikeButton(likeButton);
+      this._handleLikeButton(likeButton);
     });
     //.card__delete-button
     const deleteButton = this._cardElement.querySelector(
       ".card__delete-button"
     );
     deleteButton.addEventListener("click", () => {
-      this._handledeleteButton(this._cardElement);
+      this._handleDeleteButton(this._cardElement);
     });
     //.card__image
     const cardImage = this._cardElement.querySelector(".card__image");
     cardImage.addEventListener("click", () => {
-      //this._handleImageClick();
-
-      //Cannot get this class to call the function I passed in
       this._handleImageClick(this);
     });
   }
 
-  _handledeleteButton(cardElement) {
+  _handleDeleteButton(cardElement) {
     cardElement.remove();
     cardElement = null;
   }
 
-  _handlelikeButton(likebutton) {
+  _handleLikeButton(likebutton) {
     console.log("this function is being called");
     likebutton.classList.toggle("card__like-button_active");
   }
-
-  // _handleImageClick() {
-  //   //TODO: open the image modal and pass in the current image data to the image modal
-  //   const imageModal = document.querySelector(".image-modal");
-  //   const popupImageElement = document.querySelector(
-  //     ".image-modal__image-element"
-  //   );
-  //   const popupImageTextElement = document.querySelector(".image-modal__text");
-
-  //   popupImageElement.setAttribute("src", this.link);
-  //   popupImageElement.setAttribute("alt", this.name);
-  //   popupImageTextElement.textContent = this.name;
-
-  //   this._openModal(imageModal);
-  // }
 
   getView() {
     //get the card view and it's elements
@@ -68,22 +50,5 @@ export default class Card {
     cardImageElement.setAttribute("alt", this.name);
     cardTitleElement.textContent = this.name;
     return this._cardElement;
-  }
-
-  // _openModal(popup) {
-  //   popup.classList.add("modal_opened");
-  //   document.addEventListener("keydown", this.closeOnEscape);
-  // }
-
-  // _closeModal(popup) {
-  //   popup.classList.remove("modal_opened");
-  //   document.removeEventListener("keydown", this.closeOnEscape);
-  // }
-
-  closeOnEscape(e) {
-    if (e.key === "Escape") {
-      const openModal = document.querySelector(".modal_opened");
-      _closeModal(openModal);
-    }
   }
 }

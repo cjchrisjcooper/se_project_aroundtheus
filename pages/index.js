@@ -1,5 +1,5 @@
-import Card from "../components/Card.js";
-import FormValidator from "../components/FormValidator.js";
+import Card from "../Components/Card.js";
+import FormValidator from "../Components/FormValidator.js";
 console.log("This file is working");
 // finding all the modal elements in the DOM
 const editProfilemodal = document.querySelector("#edit-modal");
@@ -118,11 +118,7 @@ imageModalCloseButton.addEventListener("click", function (evt) {
   closeModal(imageModal);
 });
 
-addCardModal.addEventListener("click", (evt) => {
-  if (evt.target.classList.contains("modal")) {
-    closeModal(addCardModal);
-  }
-});
+addCardModal.addEventListener("click", closeModalOnClick);
 
 editProfilemodal.addEventListener("mousedown", closeModalOnClick);
 
@@ -161,9 +157,13 @@ function handleEditProfileFormSubmit(evt) {
 
 function renderCard(card, cardLocation) {
   const cardsListElement = document.querySelector(cardLocation);
-  cardsListElement.prepend(card.getView());
-  console.log("render card is being called");
+  cardsListElement.prepend(card);
 }
+
+const createCard = (cardData) => {
+  const card = new Card(cardData, "#card-template", handleImageClick);
+  return card.getView();
+};
 
 function handleImageClick(cardData) {
   //TODO: open the image modal and pass in the current image data to the image modal
@@ -182,8 +182,9 @@ function handleImageClick(cardData) {
 
 //creating all the cards using a loop and the card class
 initialCards.forEach((cardData) => {
-  const card = new Card(cardData, "#card-template");
-  renderCard(card, ".cards__list", handleImageClick);
+  //const card = new Card(cardData, "#card-template", handleImageClick);
+  const card = createCard(cardData);
+  renderCard(card, ".cards__list");
 });
 
 const addCardForm = document.querySelector("#add-card-form");
