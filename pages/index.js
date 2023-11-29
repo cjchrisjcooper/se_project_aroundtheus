@@ -1,5 +1,5 @@
-import Card from "../Components/Card.js";
-import FormValidator from "../Components/FormValidator.js";
+import Card from "../components/Card.js";
+import FormValidator from "../components/FormValidator.js";
 console.log("This file is working");
 // finding all the modal elements in the DOM
 const editProfilemodal = document.querySelector("#edit-modal");
