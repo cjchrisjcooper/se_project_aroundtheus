@@ -11,8 +11,10 @@ import {
   nameInput,
   jobInput,
   ImagePopupSelector,
-  AddCardSelector,
+  addCardSelector,
   addCardButton,
+  config,
+  addCardFormElement,
 } from "../components/Constants.js";
 import Card from "../components/Card.js";
 import PopupWithForm from "../components/PopupWithForm.js";
@@ -26,7 +28,6 @@ const handleImageClick = (data) => {
 };
 
 const handleAddCardFormSubmit = function () {
-  evt.preventDefault();
   const cardData = {
     name: addCardTitleInput.value,
     link: addCardImgUrlInput.value,
@@ -41,8 +42,10 @@ const handleAddCardFormSubmit = function () {
 
 const ImagePopup = new PopupWithImage(ImagePopupSelector);
 
+const addCardFormValidator = new FormValidator(config, addCardFormElement);
+addCardFormValidator.enableValidation();
 //problem lies in the "PopupWithForm" class and/or in the handleAddCardFormSubmit() function
-const addCardForm = new PopupWithForm(AddCardSelector, handleAddCardFormSubmit);
+const addCardForm = new PopupWithForm(addCardSelector, handleAddCardFormSubmit);
 addCardForm.setEventListeners();
 
 addCardButton.addEventListener("click", () => {

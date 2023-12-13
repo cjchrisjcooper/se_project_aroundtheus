@@ -59,6 +59,17 @@ export const ImagePopupSelector = {
   popupSelector: ".image-modal",
 };
 
-export const AddCardSelector = {
+export const addCardSelector = {
   popupSelector: "#add-card-modal",
+};
+
+export const addCardFormElement = document.querySelector("#add-card-form");
+
+export const config = {
+  formSelector: ".modal__form",
+  inputSelector: ".modal__input",
+  submitButtonSelector: ".modal__save-button",
+  inactiveButtonClass: "modal__button_disabled",
+  inputErrorClass: "modal__input_type_error",
+  errorClass: "modal__error_visible",
 };
