@@ -55,6 +55,10 @@ export const jobInput = editProfilemodal.querySelector(
 
 export const addCardButton = document.querySelector(".profile__add-button");
 
+export const editProfileButton = document.querySelector(
+  ".profile__edit-button"
+);
+
 export const ImagePopupSelector = {
   popupSelector: ".image-modal",
 };
@@ -64,6 +68,8 @@ export const addCardSelector = {
 };
 
 export const addCardFormElement = document.querySelector("#add-card-form");
+
+export const editProfileFormElement = document.querySelector("#edit-modal");
 
 export const config = {
   formSelector: ".modal__form",
