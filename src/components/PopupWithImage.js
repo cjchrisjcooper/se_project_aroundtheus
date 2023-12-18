@@ -16,6 +16,6 @@ export default class PopupWithImage extends Popup {
     this.popupImageElement.setAttribute("alt", name);
     this.popupImageTextElement.textContent = name;
 
-    super.open(this);
+    super.open();
   }
 }

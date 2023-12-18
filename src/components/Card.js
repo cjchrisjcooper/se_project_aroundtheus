@@ -21,8 +21,7 @@ export default class Card {
       this._handleDeleteButton();
     });
     //.card__image
-    const cardImage = this._cardElement.querySelector(".card__image");
-    cardImage.addEventListener("click", () => {
+    this.cardImageElement.addEventListener("click", () => {
       this._handleImageClick(this);
     });
   }
@@ -45,7 +44,7 @@ export default class Card {
     this.cardTitleElement = this._cardElement.querySelector(".card__title");
     this.likeButton = this._cardElement.querySelector(".card__like-button");
     //use private method set event listeners
-    this._setEventListeners(this._cardElement);
+    this._setEventListeners();
     //set the elements in hte card element to the properties of this class
     this.cardImageElement.setAttribute("src", this.link);
     this.cardImageElement.setAttribute("alt", this.name);

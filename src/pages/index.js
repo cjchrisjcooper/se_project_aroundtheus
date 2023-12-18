@@ -25,7 +25,6 @@ import UserInfo from "../components/UserInfo.js";
 
 const handleImageClick = (data) => {
   imagePopup.open(data);
-  imagePopup.setEventListeners();
 };
 
 const createCard = (cardData) => {
@@ -63,8 +62,8 @@ const editProfileObject = {
       editProfileInputValues.profileName,
       editProfileInputValues.profileJob
     );
-    profileName.textContent = userProfile.getUserInfo().name;
-    profileJob.textContent = userProfile.getUserInfo().job;
+    profileName.textContent = userProfile.profileName;
+    profileJob.textContent = userProfile.profileJob;
     // userProfile.setUserInfo(nameInput.value, jobInput.value);
     nameInput.value = "";
     jobInput.value = "";
@@ -111,6 +110,7 @@ addCardForm.setEventListeners();
 addCardFormValidator.enableValidation();
 editProfileForm.setEventListeners();
 editProfileFormValidator.enableValidation();
+imagePopup.setEventListeners();
 //-----------------------------------------------------------------------------------------------
 //event listeners
 //-----------------------------------------------------------------------------------------------
@@ -119,7 +119,8 @@ addCardButton.addEventListener("click", () => {
 });
 
 editProfileButton.addEventListener("click", () => {
-  nameInput.value = userProfile.getUserInfo().name;
-  jobInput.value = userProfile.getUserInfo().job;
+  const { name, job } = userProfile.getUserInfo();
+  nameInput.value = name;
+  jobInput.value = job;
   editProfileForm.open();
 });
