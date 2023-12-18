@@ -1,7 +1,9 @@
 export default class UserInfo {
-  constructor({ name, job }) {
-    this._name = name;
-    this._job = job;
+  constructor(nameElement, jobElement) {
+    this._name = nameElement;
+    this.profileName = document.querySelector(`${nameElement}`).textContent;
+    this._job = jobElement;
+    this.profileJob = document.querySelector(`${jobElement}`).textContent;
   }
 
   getUserInfo() {
@@ -10,13 +12,13 @@ export default class UserInfo {
       name: "",
       job: "",
     };
-    newObj.name = this._name;
-    newObj.job = this._job;
+    newObj.name = this.profileName;
+    newObj.job = this.profileJob;
     return newObj;
   }
 
   setUserInfo(newName, newJob) {
-    this._name = newName;
-    this._job = newJob;
+    this.profileName = newName;
+    this.profileJob = newJob;
   }
 }

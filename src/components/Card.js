@@ -10,8 +10,7 @@ export default class Card {
 
   _setEventListeners() {
     //.card__like-button
-    const likeButton = this._cardElement.querySelector(".card__like-button");
-    likeButton.addEventListener("click", () => {
+    this.likeButton.addEventListener("click", () => {
       this._handleLikeButton();
     });
     //.card__delete-button
@@ -42,15 +41,15 @@ export default class Card {
     const cardTemplate = document.querySelector(this.cardSelector).content
       .firstElementChild;
     this._cardElement = cardTemplate.cloneNode(true);
-    const cardImageElement = this._cardElement.querySelector(".card__image");
-    const cardTitleElement = this._cardElement.querySelector(".card__title");
+    this.cardImageElement = this._cardElement.querySelector(".card__image");
+    this.cardTitleElement = this._cardElement.querySelector(".card__title");
     this.likeButton = this._cardElement.querySelector(".card__like-button");
     //use private method set event listeners
     this._setEventListeners(this._cardElement);
     //set the elements in hte card element to the properties of this class
-    cardImageElement.setAttribute("src", this.link);
-    cardImageElement.setAttribute("alt", this.name);
-    cardTitleElement.textContent = this.name;
+    this.cardImageElement.setAttribute("src", this.link);
+    this.cardImageElement.setAttribute("alt", this.name);
+    this.cardTitleElement.textContent = this.name;
     return this._cardElement;
   }
 }

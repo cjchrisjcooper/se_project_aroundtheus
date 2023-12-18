@@ -25,6 +25,7 @@ import UserInfo from "../components/UserInfo.js";
 
 const handleImageClick = (data) => {
   ImagePopup.open(data);
+  ImagePopup.setEventListeners();
 };
 //-----------------------------------------------------------
 //Objects
@@ -33,9 +34,14 @@ const handleImageClick = (data) => {
 const addCardObject = {
   popupSelector: "#add-card-modal",
   handleFormSubmit: () => {
+    // const cardData = {
+    //   name: addCardTitleInput.value,
+    //   link: addCardImgUrlInput.value,
+    // };
+    const inputValues = addCardForm._getInputValues();
     const cardData = {
-      name: addCardTitleInput.value,
-      link: addCardImgUrlInput.value,
+      name: inputValues.name,
+      link: inputValues.link,
     };
     const cardElement = new Card(
       cardData,
@@ -59,20 +65,18 @@ const editProfileObject = {
     nameInput.value = "";
     jobInput.value = "";
     editProfileFormValidator.toggleButtonState();
-    console.log(userProfile._name);
     editProfileForm.close();
   },
-};
-// user info object
-const currentUserInfo = {
-  name: profileName.textContent,
-  job: profileJob.textContent,
 };
 //---------------------------------------------------------------------------------------------------------------------
 //set up all the classes
 //---------------------------------------------------------------------------------------------------------------------
 const ImagePopup = new PopupWithImage(ImagePopupSelector);
-const userProfile = new UserInfo(currentUserInfo);
+// const userProfile = new UserInfo(
+//   profileName.textContent,
+//   profileJob.textContent
+// );
+const userProfile = new UserInfo(".profile__header", ".profile__subheader");
 const addCardFormValidator = new FormValidator(config, addCardFormElement);
 const addCardForm = new PopupWithForm(addCardObject);
 const editProfileFormValidator = new FormValidator(
@@ -110,7 +114,7 @@ addCardButton.addEventListener("click", () => {
 });
 
 editProfileButton.addEventListener("click", () => {
-  nameInput.value = userProfile._name;
-  jobInput.value = userProfile._job;
+  nameInput.value = userProfile.profileName;
+  jobInput.value = userProfile.profileJob;
   editProfileForm.open();
 });
