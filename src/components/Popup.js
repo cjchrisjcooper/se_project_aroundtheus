@@ -9,7 +9,6 @@ export class Popup {
   open() {
     this._popupElement.classList.add("modal_opened");
     document.addEventListener("keydown", this._handleEscClose);
-    // this.setEventListeners();
   }
 
   close() {

@@ -24,34 +24,33 @@ import PopupWithImage from "../components/PopupWithImage.js";
 import UserInfo from "../components/UserInfo.js";
 
 const handleImageClick = (data) => {
-  ImagePopup.open(data);
-  ImagePopup.setEventListeners();
+  imagePopup.open(data);
+  imagePopup.setEventListeners();
 };
+
+const createCard = (cardData) => {
+  const card = new Card(cardData, selectors.Cardtemplate, handleImageClick);
+  return card.getView();
+};
+
 //-----------------------------------------------------------
 //Objects
 //----------------------------------------------------------
+
 //Add Card object
 const addCardObject = {
   popupSelector: "#add-card-modal",
   handleFormSubmit: () => {
-    // const cardData = {
-    //   name: addCardTitleInput.value,
-    //   link: addCardImgUrlInput.value,
-    // };
     const inputValues = addCardForm._getInputValues();
     const cardData = {
       name: inputValues.name,
       link: inputValues.link,
     };
-    const cardElement = new Card(
-      cardData,
-      selectors.Cardtemplate,
-      handleImageClick
-    );
+    const cardElement = createCard(cardData);
     addCardTitleInput.value = "";
     addCardImgUrlInput.value = "";
     addCardFormValidator.toggleButtonState();
-    cardSelection.addItem(cardElement.getView());
+    cardSelection.addItem(cardElement);
     addCardForm.close();
   },
 };
@@ -59,9 +58,14 @@ const addCardObject = {
 const editProfileObject = {
   popupSelector: "#edit-modal",
   handleFormSubmit: () => {
-    profileName.textContent = nameInput.value;
-    profileJob.textContent = jobInput.value;
-    userProfile.setUserInfo(nameInput.value, jobInput.value);
+    const editProfileInputValues = editProfileForm._getInputValues();
+    userProfile.setUserInfo(
+      editProfileInputValues.profileName,
+      editProfileInputValues.profileJob
+    );
+    profileName.textContent = userProfile.getUserInfo().name;
+    profileJob.textContent = userProfile.getUserInfo().job;
+    // userProfile.setUserInfo(nameInput.value, jobInput.value);
     nameInput.value = "";
     jobInput.value = "";
     editProfileFormValidator.toggleButtonState();
@@ -71,7 +75,7 @@ const editProfileObject = {
 //---------------------------------------------------------------------------------------------------------------------
 //set up all the classes
 //---------------------------------------------------------------------------------------------------------------------
-const ImagePopup = new PopupWithImage(ImagePopupSelector);
+const imagePopup = new PopupWithImage(ImagePopupSelector);
 // const userProfile = new UserInfo(
 //   profileName.textContent,
 //   profileJob.textContent
@@ -87,12 +91,13 @@ const editProfileForm = new PopupWithForm(editProfileObject);
 const cardSelection = new Section(
   {
     renderer: (item) => {
-      const cardElement = new Card(
-        item,
-        selectors.Cardtemplate,
-        handleImageClick
-      );
-      cardSelection.addItem(cardElement.getView());
+      // const cardElement = new Card(
+      //   item,
+      //   selectors.Cardtemplate,
+      //   handleImageClick
+      // );
+      const cardElement = createCard(item);
+      cardSelection.addItem(cardElement);
     },
     initialCards,
   },
@@ -114,7 +119,7 @@ addCardButton.addEventListener("click", () => {
 });
 
 editProfileButton.addEventListener("click", () => {
-  nameInput.value = userProfile.profileName;
-  jobInput.value = userProfile.profileJob;
+  nameInput.value = userProfile.getUserInfo().name;
+  jobInput.value = userProfile.getUserInfo().job;
   editProfileForm.open();
 });
