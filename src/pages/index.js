@@ -39,11 +39,11 @@ const createCard = (cardData) => {
 //Add Card object
 const addCardObject = {
   popupSelector: "#add-card-modal",
-  handleFormSubmit: () => {
-    const inputValues = addCardForm._getInputValues();
+  handleFormSubmit: (inputValues) => {
+    const addCardinputValues = inputValues;
     const cardData = {
-      name: inputValues.name,
-      link: inputValues.link,
+      name: addCardinputValues.name,
+      link: addCardinputValues.link,
     };
     const cardElement = createCard(cardData);
     addCardTitleInput.value = "";
@@ -56,15 +56,14 @@ const addCardObject = {
 //the edit profile object
 const editProfileObject = {
   popupSelector: "#edit-modal",
-  handleFormSubmit: () => {
-    const editProfileInputValues = editProfileForm._getInputValues();
+  handleFormSubmit: (inputValues) => {
+    const editProfileInputValues = inputValues;
     userProfile.setUserInfo(
       editProfileInputValues.profileName,
       editProfileInputValues.profileJob
     );
     profileName.textContent = userProfile.profileName;
     profileJob.textContent = userProfile.profileJob;
-    // userProfile.setUserInfo(nameInput.value, jobInput.value);
     nameInput.value = "";
     jobInput.value = "";
     editProfileFormValidator.toggleButtonState();
@@ -75,10 +74,6 @@ const editProfileObject = {
 //set up all the classes
 //---------------------------------------------------------------------------------------------------------------------
 const imagePopup = new PopupWithImage(ImagePopupSelector);
-// const userProfile = new UserInfo(
-//   profileName.textContent,
-//   profileJob.textContent
-// );
 const userProfile = new UserInfo(".profile__header", ".profile__subheader");
 const addCardFormValidator = new FormValidator(config, addCardFormElement);
 const addCardForm = new PopupWithForm(addCardObject);
@@ -90,11 +85,6 @@ const editProfileForm = new PopupWithForm(editProfileObject);
 const cardSelection = new Section(
   {
     renderer: (item) => {
-      // const cardElement = new Card(
-      //   item,
-      //   selectors.Cardtemplate,
-      //   handleImageClick
-      // );
       const cardElement = createCard(item);
       cardSelection.addItem(cardElement);
     },
