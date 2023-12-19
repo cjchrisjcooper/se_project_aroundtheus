@@ -7,8 +7,6 @@ import {
   selectors,
   addCardImgUrlInput,
   addCardTitleInput,
-  profileName,
-  profileJob,
   nameInput,
   jobInput,
   ImagePopupSelector,
