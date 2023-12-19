@@ -19,5 +19,9 @@ export default class UserInfo {
   setUserInfo(name, job) {
     this.profileName = name;
     this.profileJob = job;
+    const profileJob = document.querySelector(".profile__subheader");
+    const profileName = document.querySelector(".profile__header");
+    profileJob.textContent = this.profileJob;
+    profileName.textContent = this.profileName;
   }
 }

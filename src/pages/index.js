@@ -62,8 +62,6 @@ const editProfileObject = {
       editProfileInputValues.profileName,
       editProfileInputValues.profileJob
     );
-    profileName.textContent = editProfileInputValues.profileName;
-    profileJob.textContent = editProfileInputValues.profileJob;
     editProfileForm.popupForm.reset();
     editProfileFormValidator.toggleButtonState();
     editProfileForm.close();
