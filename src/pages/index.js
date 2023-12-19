@@ -62,10 +62,9 @@ const editProfileObject = {
       editProfileInputValues.profileName,
       editProfileInputValues.profileJob
     );
-    profileName.textContent = userProfile.profileName;
-    profileJob.textContent = userProfile.profileJob;
-    nameInput.value = "";
-    jobInput.value = "";
+    profileName.textContent = editProfileInputValues.profileName;
+    profileJob.textContent = editProfileInputValues.profileJob;
+    editProfileForm.popupForm.reset();
     editProfileFormValidator.toggleButtonState();
     editProfileForm.close();
   },
