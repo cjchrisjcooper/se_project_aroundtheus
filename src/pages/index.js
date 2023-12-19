@@ -38,14 +38,8 @@ const createCard = (cardData) => {
 const addCardObject = {
   popupSelector: "#add-card-modal",
   handleFormSubmit: (inputValues) => {
-    const addCardinputValues = inputValues;
-    const cardData = {
-      name: addCardinputValues.name,
-      link: addCardinputValues.link,
-    };
-    const cardElement = createCard(cardData);
-    addCardTitleInput.value = "";
-    addCardImgUrlInput.value = "";
+    const cardElement = createCard(inputValues);
+    addCardForm.popupForm.reset();
     addCardFormValidator.toggleButtonState();
     cardSelection.addItem(cardElement);
     addCardForm.close();
@@ -55,11 +49,7 @@ const addCardObject = {
 const editProfileObject = {
   popupSelector: "#edit-modal",
   handleFormSubmit: (inputValues) => {
-    const editProfileInputValues = inputValues;
-    userProfile.setUserInfo(
-      editProfileInputValues.profileName,
-      editProfileInputValues.profileJob
-    );
+    userProfile.setUserInfo(inputValues.profileName, inputValues.profileJob);
     editProfileForm.popupForm.reset();
     editProfileFormValidator.toggleButtonState();
     editProfileForm.close();
