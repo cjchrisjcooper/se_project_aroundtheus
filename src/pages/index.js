@@ -5,8 +5,7 @@ import Section from "../components/Section.js";
 import {
   initialCards,
   selectors,
-  addCardImgUrlInput,
-  addCardTitleInput,
+  imageProfileAvatar,
   nameInput,
   jobInput,
   ImagePopupSelector,
@@ -20,6 +19,7 @@ import Card from "../components/Card.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import UserInfo from "../components/UserInfo.js";
+import { Api } from "../components/Api.js";
 
 const handleImageClick = (data) => {
   imagePopup.open(data);
@@ -67,20 +67,11 @@ const editProfileFormValidator = new FormValidator(
   editProfileFormElement
 );
 const editProfileForm = new PopupWithForm(editProfileObject);
-const cardSelection = new Section(
-  {
-    renderer: (item) => {
-      const cardElement = createCard(item);
-      cardSelection.addItem(cardElement);
-    },
-    initialCards,
-  },
-  selectors.CardSelection
-);
+let cardSelection;
 //--------------------------------------------------------------------------------------------
 //Adding functionality to index.js
 //---------------------------------------------------------------------------------------
-cardSelection.renderItems(initialCards);
+
 addCardForm.setEventListeners();
 addCardFormValidator.enableValidation();
 editProfileForm.setEventListeners();
@@ -94,8 +85,48 @@ addCardButton.addEventListener("click", () => {
 });
 
 editProfileButton.addEventListener("click", () => {
-  const { name, job } = userProfile.getUserInfo();
+  // const {name, about} = api.loadUserInfo().then((user) => {
+  //   console.log(user);
+  // });
+  // userProfile.setUserInfo(currentUser.name, currentUser.about);
+  // const { name, job } = userProfile.getUserInfo();
+  // console.log(userProfile.getUserInfo());
+  // nameInput.value = name;
+  // jobInput.value = job;
+  // editProfileForm.open();
+  const { name, about } = api.loadUserInfo();
+  userProfile.setUserInfo(name, about);
   nameInput.value = name;
-  jobInput.value = job;
+  jobInput.value = about;
   editProfileForm.open();
+});
+// imageProfileAvatar.addEventListener("click", () => {
+//   //do something
+//   //open the edit profile image modal
+// });
+//-----------------------------------------------------------------------------------------------
+// testing the API
+//-----------------------------------------------------------------------------------------------
+const api = new Api({
+  baseUrl: "https://around-api.en.tripleten-services.com/v1",
+  headers: {
+    authorization: "883a5f27-9ca4-4397-af55-ef56c8ad3047",
+    "Content-Type": "application/json",
+  },
+});
+// api.editProfile("Jacques Cousteau", "Explorer");
+api.loadUserInfo();
+
+api.getInitialCards().then((cards) => {
+  cardSelection = new Section(
+    {
+      renderer: (item) => {
+        const cardElement = createCard(item);
+        cardSelection.addItem(cardElement);
+      },
+      cards,
+    },
+    selectors.CardSelection
+  );
+  cardSelection.renderItems(initialCards);
 });
