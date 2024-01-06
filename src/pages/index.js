@@ -38,11 +38,14 @@ const createCard = (cardData) => {
 const addCardObject = {
   popupSelector: "#add-card-modal",
   handleFormSubmit: (inputValues) => {
-    const cardElement = createCard(inputValues);
-    addCardForm.popupForm.reset();
-    addCardFormValidator.toggleButtonState();
-    cardSelection.addItem(cardElement);
-    addCardForm.close();
+    api.addCard(inputValues.name, inputValues.link).then(() => {
+      // cardElement = createCard(inputValues);
+      const cardElement = createCard(inputValues);
+      addCardForm.popupForm.reset();
+      addCardFormValidator.toggleButtonState();
+      cardSelection.addItem(cardElement);
+      addCardForm.close();
+    });
   },
 };
 //the edit profile object
@@ -85,19 +88,14 @@ addCardButton.addEventListener("click", () => {
 });
 
 editProfileButton.addEventListener("click", () => {
-  // const {name, about} = api.loadUserInfo().then((user) => {
-  //   console.log(user);
-  // });
-  // userProfile.setUserInfo(currentUser.name, currentUser.about);
-  // const { name, job } = userProfile.getUserInfo();
-  // console.log(userProfile.getUserInfo());
-  // nameInput.value = name;
-  // jobInput.value = job;
-  // editProfileForm.open();
-  const { name, about } = api.loadUserInfo();
-  userProfile.setUserInfo(name, about);
+  api.loadUserInfo().then(({ name, about }) => {
+    userProfile.setUserInfo(name, about);
+  });
+
+  const { name, job } = userProfile.getUserInfo();
+  console.log(userProfile.getUserInfo());
   nameInput.value = name;
-  jobInput.value = about;
+  jobInput.value = job;
   editProfileForm.open();
 });
 // imageProfileAvatar.addEventListener("click", () => {
@@ -114,9 +112,7 @@ const api = new Api({
     "Content-Type": "application/json",
   },
 });
-// api.editProfile("Jacques Cousteau", "Explorer");
-api.loadUserInfo();
-
+api.getInitialCards();
 api.getInitialCards().then((cards) => {
   cardSelection = new Section(
     {
@@ -124,9 +120,9 @@ api.getInitialCards().then((cards) => {
         const cardElement = createCard(item);
         cardSelection.addItem(cardElement);
       },
-      cards,
+      items: cards,
     },
     selectors.CardSelection
   );
-  cardSelection.renderItems(initialCards);
+  cardSelection.renderItems(cards);
 });
