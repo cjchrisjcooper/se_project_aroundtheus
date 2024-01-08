@@ -20,13 +20,32 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import UserInfo from "../components/UserInfo.js";
 import { Api } from "../components/Api.js";
+import DeleteConfirmationPopup from "../components/DeleteConfirmationPopup.js";
 
 const handleImageClick = (data) => {
   imagePopup.open(data);
 };
 
+const handleCardDelete = (id) => {
+  deleteCardForm.open();
+};
+
 const createCard = (cardData) => {
-  const card = new Card(cardData, selectors.Cardtemplate, handleImageClick);
+  const card = new Card(
+    cardData,
+    selectors.Cardtemplate,
+    handleImageClick,
+    (card) => {
+      deleteCardForm.open();
+      deleteCardForm.defaultText();
+      deleteCardForm.setSubmitAction((card) => {
+        api.deleteCard(card).then(() => {
+          deleteCardForm.deleteText();
+          deleteCardForm.close();
+        });
+      });
+    }
+  );
   return card.getView();
 };
 
@@ -52,11 +71,23 @@ const addCardObject = {
 const editProfileObject = {
   popupSelector: "#edit-modal",
   handleFormSubmit: (inputValues) => {
-    userProfile.setUserInfo(inputValues.profileName, inputValues.profileJob);
-    editProfileForm.popupForm.reset();
-    editProfileFormValidator.toggleButtonState();
-    editProfileForm.close();
+    api
+      .editProfile(inputValues.profileName, inputValues.profileJob)
+      .then((res) => {
+        userProfile.setUserInfo(
+          inputValues.profileName,
+          inputValues.profileJob
+        );
+        editProfileForm.popupForm.reset();
+        editProfileFormValidator.toggleButtonState();
+        editProfileForm.close();
+        console.log(res);
+      });
   },
+};
+
+const deleteCardObject = {
+  popupSelector: "#delete-card-modal",
 };
 //---------------------------------------------------------------------------------------------------------------------
 //set up all the classes
@@ -71,10 +102,11 @@ const editProfileFormValidator = new FormValidator(
 );
 const editProfileForm = new PopupWithForm(editProfileObject);
 let cardSelection;
+const deleteCardForm = new DeleteConfirmationPopup(deleteCardObject);
 //--------------------------------------------------------------------------------------------
 //Adding functionality to index.js
 //---------------------------------------------------------------------------------------
-
+deleteCardForm.setEventListeners();
 addCardForm.setEventListeners();
 addCardFormValidator.enableValidation();
 editProfileForm.setEventListeners();
@@ -91,7 +123,6 @@ editProfileButton.addEventListener("click", () => {
   api.loadUserInfo().then(({ name, about }) => {
     userProfile.setUserInfo(name, about);
   });
-
   const { name, job } = userProfile.getUserInfo();
   console.log(userProfile.getUserInfo());
   nameInput.value = name;
@@ -112,17 +143,29 @@ const api = new Api({
     "Content-Type": "application/json",
   },
 });
-api.getInitialCards();
-api.getInitialCards().then((cards) => {
-  cardSelection = new Section(
-    {
-      renderer: (item) => {
-        const cardElement = createCard(item);
-        cardSelection.addItem(cardElement);
+api
+  .loadUserInfo()
+  .then(({ name, about }) => {
+    userProfile.setUserInfo(name, about);
+  })
+  .catch((res) => {
+    console.log(`There is an error in the program: ${res}`);
+  });
+api
+  .getInitialCards()
+  .then((cards) => {
+    cardSelection = new Section(
+      {
+        renderer: (item) => {
+          const cardElement = createCard(item);
+          cardSelection.addItem(cardElement);
+        },
+        items: cards,
       },
-      items: cards,
-    },
-    selectors.CardSelection
-  );
-  cardSelection.renderItems(cards);
-});
+      selectors.CardSelection
+    );
+    cardSelection.renderItems();
+  })
+  .catch((res) => {
+    console.log(`There is an error in the program: ${res}`);
+  });

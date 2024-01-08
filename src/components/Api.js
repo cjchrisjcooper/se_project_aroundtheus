@@ -9,18 +9,11 @@ export class Api {
     return fetch("https://around-api.en.tripleten-services.com/v1/cards", {
       method: "GET",
       headers: this._headers,
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-      })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log("there was an error:" + err);
-      });
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+    });
   }
 
   // other methods for working with the API
@@ -28,18 +21,11 @@ export class Api {
     return fetch("https://around-api.en.tripleten-services.com/v1/users/me", {
       method: "GET",
       headers: this._headers,
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-      })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log("there was an error:" + err);
-      });
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+    });
   }
 
   loadCards() {
@@ -54,9 +40,6 @@ export class Api {
       })
       .then((res) => {
         console.log(res);
-      })
-      .catch((err) => {
-        console.log("there was an error:" + err);
       });
   }
 
@@ -68,18 +51,11 @@ export class Api {
         name: name,
         about: about,
       }),
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-      })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log("there was an error:" + err);
-      });
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+    });
   }
 
   addCard(name, link) {
@@ -90,18 +66,11 @@ export class Api {
         name: name,
         link: link,
       }),
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-      })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log("there was an error:" + err);
-      });
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+    });
   }
 
   deleteCard(cardId) {
@@ -111,18 +80,11 @@ export class Api {
         method: "DELETE",
         headers: this._headers,
       }
-    )
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-      })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log("there was an error:" + err);
-      });
+    ).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+    });
   }
 
   addLike(cardId) {
@@ -132,18 +94,11 @@ export class Api {
         method: "PUT",
         headers: this._headers,
       }
-    )
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-      })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log("there was an error:" + err);
-      });
+    ).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+    });
   }
 
   removeLike(cardId) {
@@ -153,18 +108,11 @@ export class Api {
         method: "DELETE",
         headers: this._headers,
       }
-    )
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-      })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log("there was an error:" + err);
-      });
+    ).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+    });
   }
 
   updateProfilePicture(imageUrl) {
@@ -177,17 +125,10 @@ export class Api {
           avatar: imageUrl,
         }),
       }
-    )
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-      })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log("there was an error:" + err);
-      });
+    ).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+    });
   }
 }

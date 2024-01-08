@@ -1,11 +1,19 @@
 //"Components" has been renamed to "components in github"
 //my computer throws an error when I import in "index.js"
 export default class Card {
-  constructor(data, cardSelector, handleImageClick) {
-    this.name = data.name;
-    this.link = data.link;
+  constructor(
+    { isLiked, name, link, _id },
+    cardSelector,
+    handleImageClick,
+    handleCardDelete
+  ) {
+    this.name = name;
+    this.link = link;
+    this._isLiked = isLiked;
+    this.id = _id;
     this.cardSelector = cardSelector;
     this._handleImageClick = handleImageClick;
+    this._handleCardDelete = handleCardDelete;
   }
 
   _setEventListeners() {
@@ -27,8 +35,8 @@ export default class Card {
   }
 
   _handleDeleteButton() {
-    this._cardElement.remove();
-    this._cardElement = null;
+    console.log("this function is being called");
+    this._handleCardDelete(this._id);
   }
 
   _handleLikeButton() {
