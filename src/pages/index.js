@@ -26,19 +26,17 @@ const handleImageClick = (data) => {
   imagePopup.open(data);
 };
 
-const handleCardDelete = (id) => {
-  deleteCardForm.open();
-};
-
 const createCard = (cardData) => {
   const card = new Card(
     cardData,
     selectors.Cardtemplate,
     handleImageClick,
-    (card) => {
+    function handleDeleteModal() {
       deleteCardForm.open();
       deleteCardForm.defaultText();
-      deleteCardForm.setSubmitAction((card) => {
+    },
+    function handleDeleteCard(card) {
+      deleteCardForm.setSubmitAction(function handleCardDelete() {
         api.deleteCard(card).then(() => {
           deleteCardForm.deleteText();
           deleteCardForm.close();
