@@ -45,16 +45,27 @@ const createCard = (cardData) => {
       });
     },
     function addLikeButton() {
-      api.addLike(card.id).then(() => {
-        card._handleLikeButton();
-      });
+      api
+        .addLike(card.id)
+        .then(() => {
+          card._addLikeButtonElement();
+        })
+        .catch((res) => {
+          console.log(`There is an error in the program: ${res}`);
+        });
     },
     function removeLikeButton() {
-      api.removeLike(card.id).then(() => {
-        card._handleLikeButton();
-      });
+      api
+        .removeLike(card.id)
+        .then(() => {
+          card._removeLikeButtonElement();
+        })
+        .catch((res) => {
+          console.log(`There is an error in the program: ${res}`);
+        });
     }
   );
+  // card._isLiked();
   return card.getView();
 };
 

@@ -6,7 +6,7 @@ export default class Card {
     cardSelector,
     handleImageClick,
     openDeleteForm,
-    addLikebutton,
+    addLikeButton,
     removeLikeButton
   ) {
     this.name = name;
@@ -15,17 +15,28 @@ export default class Card {
     this.id = _id;
     this.cardSelector = cardSelector;
     this._handleImageClick = handleImageClick;
-    this._addLikebutton = addLikebutton;
+    this._addLikeButton = addLikeButton;
     this._removeLikeButton = removeLikeButton;
     this.openDeleteForm = openDeleteForm;
     this._popupDeleteForm = document.querySelector("#delete-card-modal");
   }
 
   _setEventListeners() {
+    if (this._isLiked == true) {
+      this._addLikeButtonElement();
+    } else {
+      this._removeLikeButtonElement();
+    }
     //.card__like-button
     this.likeButton.addEventListener("click", () => {
       console.log("the like button has been pressed");
-      this._handleLikeButton();
+      if (this._isLiked == false) {
+        this._addLikeButton(this);
+        this._addLikeButtonElement();
+      } else {
+        this._removeLikeButton(this);
+        this._removeLikeButtonElement();
+      }
     });
     //.card__delete-button
     const deleteButton = this._cardElement.querySelector(
@@ -41,14 +52,23 @@ export default class Card {
       this._handleImageClick(this);
     });
   }
-  _handleLikeButton() {
-    if (this._isLiked == true) {
-      this.likeButton.classList.add("card__like-button_active");
+
+  _likeStatus() {
+    if (this.isLiked) {
       this._removeLikeButton(this);
     } else {
-      this.likeButton.classList.remove("card__like-button_active");
-      this._addLikebutton(this);
+      this._addLikeButton(this);
     }
+  }
+  _addLikeButtonElement() {
+    this.likeButton.classList.add("card__like-button_active");
+  }
+  _removeLikeButtonElement() {
+    this.likeButton.classList.remove("card__like-button_active");
+  }
+
+  _toggleLikeButton() {
+    this.likeButton.classList.toggle("card__like-button_active");
   }
 
   deleteCard() {
