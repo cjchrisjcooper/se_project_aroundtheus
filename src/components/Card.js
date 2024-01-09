@@ -6,7 +6,8 @@ export default class Card {
     cardSelector,
     handleImageClick,
     openDeleteForm,
-    handleCardDelete
+    addLikebutton,
+    removeLikeButton
   ) {
     this.name = name;
     this.link = link;
@@ -14,7 +15,8 @@ export default class Card {
     this.id = _id;
     this.cardSelector = cardSelector;
     this._handleImageClick = handleImageClick;
-    this._handleCardDelete = handleCardDelete;
+    this._addLikebutton = addLikebutton;
+    this._removeLikeButton = removeLikeButton;
     this.openDeleteForm = openDeleteForm;
     this._popupDeleteForm = document.querySelector("#delete-card-modal");
   }
@@ -22,6 +24,7 @@ export default class Card {
   _setEventListeners() {
     //.card__like-button
     this.likeButton.addEventListener("click", () => {
+      console.log("the like button has been pressed");
       this._handleLikeButton();
     });
     //.card__delete-button
@@ -31,7 +34,7 @@ export default class Card {
     deleteButton.addEventListener("click", () => {
       console.log("button is being pressed");
       this.openDeleteForm(this);
-      this.handleCardDelete(this.id);
+      // this._handleCardDelete(this.id);
     });
     //.card__image
     this.cardImageElement.addEventListener("click", () => {
@@ -39,7 +42,17 @@ export default class Card {
     });
   }
   _handleLikeButton() {
-    this.likeButton.classList.toggle("card__like-button_active");
+    if (this._isLiked == true) {
+      this.likeButton.classList.add("card__like-button_active");
+      this._removeLikeButton(this);
+    } else {
+      this.likeButton.classList.remove("card__like-button_active");
+      this._addLikebutton(this);
+    }
+  }
+
+  deleteCard() {
+    this._cardElement.remove();
   }
 
   getView() {

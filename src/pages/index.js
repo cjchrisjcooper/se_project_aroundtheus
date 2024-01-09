@@ -34,13 +34,24 @@ const createCard = (cardData) => {
     function handleDeleteModal() {
       deleteCardForm.open();
       deleteCardForm.defaultText();
-    },
-    function handleDeleteCard(card) {
-      deleteCardForm.setSubmitAction(function handleCardDelete() {
-        api.deleteCard(card).then(() => {
+      deleteCardForm.setSubmitAction(() => {
+        api.deleteCard(card.id).then((res) => {
+          console.log("The delete card function is being called");
+          // delete the card element
+          card.deleteCard();
           deleteCardForm.deleteText();
           deleteCardForm.close();
         });
+      });
+    },
+    function addLikeButton() {
+      api.addLike(card.id).then(() => {
+        card._handleLikeButton();
+      });
+    },
+    function removeLikeButton() {
+      api.removeLike(card.id).then(() => {
+        card._handleLikeButton();
       });
     }
   );
@@ -87,6 +98,17 @@ const editProfileObject = {
 const deleteCardObject = {
   popupSelector: "#delete-card-modal",
 };
+
+const editAvatarObject = {
+  popupSelector: "#edit-profile-avatar-modal",
+  handleFormSubmit: (inputValues) => {
+    api.updateProfilePicture(inputValues.avatar).then((res) => {
+      userProfile.setUserAvatar(inputValues.avatar);
+      editProfileAvatarForm.close();
+      console.log(res);
+    });
+  },
+};
 //---------------------------------------------------------------------------------------------------------------------
 //set up all the classes
 //---------------------------------------------------------------------------------------------------------------------
@@ -101,9 +123,11 @@ const editProfileFormValidator = new FormValidator(
 const editProfileForm = new PopupWithForm(editProfileObject);
 let cardSelection;
 const deleteCardForm = new DeleteConfirmationPopup(deleteCardObject);
+const editProfileAvatarForm = new PopupWithForm(editAvatarObject);
 //--------------------------------------------------------------------------------------------
 //Adding functionality to index.js
 //---------------------------------------------------------------------------------------
+editProfileAvatarForm.setEventListeners();
 deleteCardForm.setEventListeners();
 addCardForm.setEventListeners();
 addCardFormValidator.enableValidation();
@@ -127,10 +151,10 @@ editProfileButton.addEventListener("click", () => {
   jobInput.value = job;
   editProfileForm.open();
 });
-// imageProfileAvatar.addEventListener("click", () => {
-//   //do something
-//   //open the edit profile image modal
-// });
+imageProfileAvatar.addEventListener("click", () => {
+  console.log("Image profile avatar is being clicked");
+  editProfileAvatarForm.open();
+});
 //-----------------------------------------------------------------------------------------------
 // testing the API
 //-----------------------------------------------------------------------------------------------
@@ -143,8 +167,9 @@ const api = new Api({
 });
 api
   .loadUserInfo()
-  .then(({ name, about }) => {
+  .then(({ name, about, avatar }) => {
     userProfile.setUserInfo(name, about);
+    userProfile.setUserAvatar(avatar);
   })
   .catch((res) => {
     console.log(`There is an error in the program: ${res}`);

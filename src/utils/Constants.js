@@ -80,4 +80,4 @@ export const config = {
   errorClass: "modal__error_visible",
 };
 
-export const imageProfileAvatar = document.querySelector("profile__picture");
+export const imageProfileAvatar = document.querySelector(".profile__picture");

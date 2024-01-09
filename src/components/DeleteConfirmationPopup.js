@@ -11,7 +11,7 @@ export default class DeleteConfirmationPopup extends Popup {
   }
 
   setSubmitAction(action) {
-    this._handFormSubmit = action;
+    this._handleFormSubmit = action;
   }
 
   defaultText() {
@@ -26,7 +26,7 @@ export default class DeleteConfirmationPopup extends Popup {
     super.setEventListeners();
     this.popupForm.addEventListener("submit", (evt) => {
       evt.preventDefault();
-      this.handleFormSubmit;
+      this._handleFormSubmit();
     });
   }
 }
