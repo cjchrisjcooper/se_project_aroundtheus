@@ -2,6 +2,7 @@ export default class UserInfo {
   constructor(nameElement, jobElement) {
     this.profileJobEl = document.querySelector(jobElement);
     this.profileNameEl = document.querySelector(nameElement);
+    this.profileAvatarEl = document.querySelector(".profile__picture_image");
   }
 
   getUserInfo() {
@@ -18,5 +19,12 @@ export default class UserInfo {
   setUserInfo(name, job) {
     this.profileJobEl.textContent = job;
     this.profileNameEl.textContent = name;
+  }
+
+  setUserAvatar(url) {
+    console.log("setUserAvatar() has been called");
+    console.log(url);
+    this.profileAvatarEl.setAttribute("src", url);
+    this.profileAvatarEl.setAttribute("alt", this.profileNameEl.textContent);
   }
 }
