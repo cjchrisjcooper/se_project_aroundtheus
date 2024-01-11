@@ -22,18 +22,23 @@ export default class Card {
   }
 
   _setEventListeners() {
-    if (this._isLiked == true) {
-      this._addLikeButtonElement();
-    } else {
-      this._removeLikeButtonElement();
-    }
+    // if (this._isLiked == true) {
+    //   this._addLikeButtonElement();
+    // } else {
+    //   this._removeLikeButtonElement();
+    // }
     //.card__like-button
     this.likeButton.addEventListener("click", () => {
       console.log("the like button has been pressed");
+      console.log(this._isLiked);
       if (this._isLiked == false) {
+        console.log("the person has liked this post");
         this._addLikeButton(this);
         this._addLikeButtonElement();
-      } else {
+      }
+
+      if (this._isLiked == true) {
+        console.log("the person has doesn't like this post");
         this._removeLikeButton(this);
         this._removeLikeButtonElement();
       }
@@ -89,6 +94,11 @@ export default class Card {
     this.cardImageElement.setAttribute("src", this.link);
     this.cardImageElement.setAttribute("alt", this.name);
     this.cardTitleElement.textContent = this.name;
+    if (this._isLiked == true) {
+      this._addLikeButtonElement();
+    } else {
+      this._removeLikeButtonElement();
+    }
     return this._cardElement;
   }
 }

@@ -71,6 +71,10 @@ export const addCardFormElement = document.querySelector("#add-card-form");
 
 export const editProfileFormElement = document.querySelector("#edit-modal");
 
+export const editAvatarFormElement = document.querySelector(
+  "#edit-profile-avatar-modal"
+);
+
 export const config = {
   formSelector: ".modal__form",
   inputSelector: ".modal__input",

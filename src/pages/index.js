@@ -12,6 +12,7 @@ import {
   addCardButton,
   config,
   addCardFormElement,
+  editAvatarFormElement,
   editProfileFormElement,
   editProfileButton,
 } from "../utils/Constants.js";
@@ -47,7 +48,8 @@ const createCard = (cardData) => {
     function addLikeButton() {
       api
         .addLike(card.id)
-        .then(() => {
+        .then((res) => {
+          card._isLiked = res.isLiked;
           card._addLikeButtonElement();
         })
         .catch((res) => {
@@ -57,7 +59,8 @@ const createCard = (cardData) => {
     function removeLikeButton() {
       api
         .removeLike(card.id)
-        .then(() => {
+        .then((res) => {
+          card._isLiked = res.isLiked;
           card._removeLikeButtonElement();
         })
         .catch((res) => {
@@ -65,7 +68,7 @@ const createCard = (cardData) => {
         });
     }
   );
-  // card._isLiked();
+  //card._isLiked = false;
   return card.getView();
 };
 
@@ -77,9 +80,10 @@ const createCard = (cardData) => {
 const addCardObject = {
   popupSelector: "#add-card-modal",
   handleFormSubmit: (inputValues) => {
-    api.addCard(inputValues.name, inputValues.link).then(() => {
+    api.addCard(inputValues.name, inputValues.link).then((res) => {
       // cardElement = createCard(inputValues);
-      const cardElement = createCard(inputValues);
+      // const cardElement = createCard(inputValues);
+      const cardElement = createCard(res);
       addCardForm.popupForm.reset();
       addCardFormValidator.toggleButtonState();
       cardSelection.addItem(cardElement);
@@ -135,10 +139,15 @@ const editProfileForm = new PopupWithForm(editProfileObject);
 let cardSelection;
 const deleteCardForm = new DeleteConfirmationPopup(deleteCardObject);
 const editProfileAvatarForm = new PopupWithForm(editAvatarObject);
+const editAvatarFormValidator = new FormValidator(
+  config,
+  editAvatarFormElement
+);
 //--------------------------------------------------------------------------------------------
 //Adding functionality to index.js
 //---------------------------------------------------------------------------------------
 editProfileAvatarForm.setEventListeners();
+editAvatarFormValidator.enableValidation();
 deleteCardForm.setEventListeners();
 addCardForm.setEventListeners();
 addCardFormValidator.enableValidation();
