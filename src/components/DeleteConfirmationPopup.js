@@ -14,11 +14,11 @@ export default class DeleteConfirmationPopup extends Popup {
     this._handleFormSubmit = action;
   }
 
-  defaultText() {
+  setDefaultText() {
     this._modalDeleteButton.textContent = "Yes";
   }
 
-  deleteText() {
+  setDeleteText() {
     this._modalDeleteButton.textContent = "Deleting...";
   }
 
@@ -28,5 +28,14 @@ export default class DeleteConfirmationPopup extends Popup {
       evt.preventDefault();
       this._handleFormSubmit();
     });
+  }
+
+  renderLoading(isLoading, loadingText = "Deleting...") {
+    console.log("render loading method is being called");
+    if (isLoading == true) {
+      this._modalDeleteButton.textContent = loadingText;
+    } else {
+      this._modalDeleteButton.textContent = this._modalDeleteButton;
+    }
   }
 }

@@ -34,23 +34,31 @@ const createCard = (cardData) => {
     handleImageClick,
     function handleDeleteModal() {
       deleteCardForm.open();
-      deleteCardForm.defaultText();
+
       deleteCardForm.setSubmitAction(() => {
-        api.deleteCard(card.id).then((res) => {
-          console.log("The delete card function is being called");
-          // delete the card element
-          card.deleteCard();
-          deleteCardForm.deleteText();
-          deleteCardForm.close();
-        });
+        api
+          .deleteCard(card.id)
+          .then((res) => {
+            console.log("The delete card function is being called");
+            // delete the card element
+            card.deleteCard();
+            deleteCardForm.renderLoading(true, "Deleting...");
+            deleteCardForm.close();
+          })
+          .finally(() => {
+            deleteCardForm.renderLoading(true, "Yes");
+          })
+          .catch((res) => {
+            console.log(`There is an error in the program: ${res}`);
+          });
       });
     },
     function addLikeButton() {
       api
         .addLike(card.id)
         .then((res) => {
-          card._isLiked = res.isLiked;
-          card._addLikeButtonElement();
+          card.isLiked = res.isLiked;
+          card.addLikeButtonElement();
         })
         .catch((res) => {
           console.log(`There is an error in the program: ${res}`);
@@ -60,7 +68,7 @@ const createCard = (cardData) => {
       api
         .removeLike(card.id)
         .then((res) => {
-          card._isLiked = res.isLiked;
+          card.isLiked = res.isLiked;
           card._removeLikeButtonElement();
         })
         .catch((res) => {
@@ -68,7 +76,7 @@ const createCard = (cardData) => {
         });
     }
   );
-  //card._isLiked = false;
+  //card.isLiked = false;
   return card.getView();
 };
 
@@ -80,15 +88,24 @@ const createCard = (cardData) => {
 const addCardObject = {
   popupSelector: "#add-card-modal",
   handleFormSubmit: (inputValues) => {
-    api.addCard(inputValues.name, inputValues.link).then((res) => {
-      // cardElement = createCard(inputValues);
-      // const cardElement = createCard(inputValues);
-      const cardElement = createCard(res);
-      addCardForm.popupForm.reset();
-      addCardFormValidator.toggleButtonState();
-      cardSelection.addItem(cardElement);
-      addCardForm.close();
-    });
+    api
+      .addCard(inputValues.name, inputValues.link)
+      .then((res) => {
+        // cardElement = createCard(inputValues);
+        // const cardElement = createCard(inputValues);
+        const cardElement = createCard(res);
+        // addCardForm.popupForm.reset();
+        // addCardFormValidator.toggleButtonState();
+        cardSelection.addItem(cardElement);
+        addCardForm.close();
+      })
+      .then(() => {
+        addCardForm.popupForm.reset();
+        addCardFormValidator.toggleButtonState();
+      })
+      .catch((res) => {
+        console.log(`There is an error in the program: ${res}`);
+      });
   },
 };
 //the edit profile object
@@ -106,6 +123,9 @@ const editProfileObject = {
         editProfileFormValidator.toggleButtonState();
         editProfileForm.close();
         console.log(res);
+      })
+      .catch((res) => {
+        console.log(`There is an error in the program: ${res}`);
       });
   },
 };
@@ -117,18 +137,27 @@ const deleteCardObject = {
 const editAvatarObject = {
   popupSelector: "#edit-profile-avatar-modal",
   handleFormSubmit: (inputValues) => {
-    api.updateProfilePicture(inputValues.avatar).then((res) => {
-      userProfile.setUserAvatar(inputValues.avatar);
-      editProfileAvatarForm.close();
-      console.log(res);
-    });
+    api
+      .updateProfilePicture(inputValues.avatar)
+      .then((res) => {
+        userProfile.setUserAvatar(inputValues.avatar);
+        editProfileAvatarForm.close();
+        console.log(res);
+      })
+      .catch((res) => {
+        console.log(`There is an error in the program: ${res}`);
+      });
   },
 };
 //---------------------------------------------------------------------------------------------------------------------
 //set up all the classes
 //---------------------------------------------------------------------------------------------------------------------
 const imagePopup = new PopupWithImage(ImagePopupSelector);
-const userProfile = new UserInfo(".profile__header", ".profile__subheader");
+const userProfile = new UserInfo(
+  ".profile__header",
+  ".profile__subheader",
+  ".profile__picture_image"
+);
 const addCardFormValidator = new FormValidator(config, addCardFormElement);
 const addCardForm = new PopupWithForm(addCardObject);
 const editProfileFormValidator = new FormValidator(
@@ -147,13 +176,13 @@ const editAvatarFormValidator = new FormValidator(
 //Adding functionality to index.js
 //---------------------------------------------------------------------------------------
 editProfileAvatarForm.setEventListeners();
-editAvatarFormValidator.enableValidation();
 deleteCardForm.setEventListeners();
 addCardForm.setEventListeners();
-addCardFormValidator.enableValidation();
 editProfileForm.setEventListeners();
-editProfileFormValidator.enableValidation();
 imagePopup.setEventListeners();
+editAvatarFormValidator.enableValidation();
+editProfileFormValidator.enableValidation();
+addCardFormValidator.enableValidation();
 //-----------------------------------------------------------------------------------------------
 //event listeners
 //-----------------------------------------------------------------------------------------------
@@ -162,9 +191,6 @@ addCardButton.addEventListener("click", () => {
 });
 
 editProfileButton.addEventListener("click", () => {
-  api.loadUserInfo().then(({ name, about }) => {
-    userProfile.setUserInfo(name, about);
-  });
   const { name, job } = userProfile.getUserInfo();
   console.log(userProfile.getUserInfo());
   nameInput.value = name;
