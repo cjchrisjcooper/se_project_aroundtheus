@@ -71,13 +71,16 @@ export class Api {
   }
 
   updateProfilePicture(imageUrl) {
-    return fetch(`${this._baseUrl}/users/me/avatar`, {
-      method: "PATCH",
-      headers: this._headers,
-      body: JSON.stringify({
-        avatar: imageUrl,
-      }),
-    }).then(this._checkValidResponse);
+    return fetch(
+      `https://around-api.en.tripleten-services.com/v1/users/me/avatar`,
+      {
+        method: "PATCH",
+        headers: this._headers,
+        body: JSON.stringify({
+          avatar: imageUrl,
+        }),
+      }
+    ).then(this._checkValidResponse);
   }
 
   _fetchrequest(url, options) {
