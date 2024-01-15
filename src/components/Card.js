@@ -24,7 +24,7 @@ export default class Card {
     // if (this.isLiked == true) {
     //   this.addLikeButtonElement();
     // } else {
-    //   this._removeLikeButtonElement();
+    //   this.removeLikeButtonElement();
     // }
     //.card__like-button
     this.likeButton.addEventListener("click", () => {
@@ -35,7 +35,7 @@ export default class Card {
       } else {
         console.log("the person has doesn't like this post");
         this._removeLikeButton(this);
-        // this._removeLikeButtonElement();
+        // this.removeLikeButtonElement();
       }
     });
     //.card__delete-button
@@ -63,7 +63,7 @@ export default class Card {
   addLikeButtonElement() {
     this.likeButton.classList.add("card__like-button_active");
   }
-  _removeLikeButtonElement() {
+  removeLikeButtonElement() {
     this.likeButton.classList.remove("card__like-button_active");
   }
 
@@ -93,7 +93,7 @@ export default class Card {
     if (this.isLiked == true) {
       this.addLikeButtonElement();
     } else {
-      this._removeLikeButtonElement();
+      this.removeLikeButtonElement();
     }
     return this._cardElement;
   }

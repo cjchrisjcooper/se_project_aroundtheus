@@ -36,13 +36,14 @@ const createCard = (cardData) => {
       deleteCardForm.open();
 
       deleteCardForm.setSubmitAction(() => {
+        deleteCardForm.renderLoading(true, "Deleting...");
         api
           .deleteCard(card.id)
           .then((res) => {
             console.log("The delete card function is being called");
             // delete the card element
             card.deleteCard();
-            deleteCardForm.renderLoading(true, "Deleting...");
+
             deleteCardForm.close();
           })
           .finally(() => {
@@ -69,7 +70,7 @@ const createCard = (cardData) => {
         .removeLike(card.id)
         .then((res) => {
           card.isLiked = res.isLiked;
-          card._removeLikeButtonElement();
+          card.removeLikeButtonElement();
         })
         .catch((res) => {
           console.log(`There is an error in the program: ${res}`);
@@ -99,7 +100,7 @@ const addCardObject = {
         cardSelection.addItem(cardElement);
         addCardForm.close();
       })
-      .then(() => {
+      .finally(() => {
         addCardForm.popupForm.reset();
         addCardFormValidator.toggleButtonState();
       })
@@ -112,6 +113,7 @@ const addCardObject = {
 const editProfileObject = {
   popupSelector: "#edit-modal",
   handleFormSubmit: (inputValues) => {
+    editProfileForm.renderLoading("true", "Saving...");
     api
       .editProfile(inputValues.profileName, inputValues.profileJob)
       .then((res) => {
@@ -119,10 +121,14 @@ const editProfileObject = {
           inputValues.profileName,
           inputValues.profileJob
         );
+
+        console.log(res);
+      })
+      .finally(() => {
+        editProfileForm.renderLoading("true", "Save");
         editProfileForm.popupForm.reset();
         editProfileFormValidator.toggleButtonState();
         editProfileForm.close();
-        console.log(res);
       })
       .catch((res) => {
         console.log(`There is an error in the program: ${res}`);
@@ -137,12 +143,19 @@ const deleteCardObject = {
 const editAvatarObject = {
   popupSelector: "#edit-profile-avatar-modal",
   handleFormSubmit: (inputValues) => {
+    editProfileAvatarForm.renderLoading("true", "Saving...");
     api
       .updateProfilePicture(inputValues.avatar)
       .then((res) => {
         userProfile.setUserAvatar(inputValues.avatar);
-        editProfileAvatarForm.close();
+
         console.log(res);
+      })
+      .finally(() => {
+        editProfileAvatarForm.close();
+        editProfileAvatarForm.popupForm.reset();
+        editAvatarFormValidator.toggleButtonState();
+        editProfileAvatarForm.renderLoading("true", "Save");
       })
       .catch((res) => {
         console.log(`There is an error in the program: ${res}`);

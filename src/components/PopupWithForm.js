@@ -23,6 +23,7 @@ export default class PopupWithForm extends Popup {
   }
 
   renderLoading(isLoading, loadingText = "Saving...") {
+    console.log(loadingText + " is the value of isLoading");
     if (isLoading) {
       this._submitButtonText.textContent = loadingText;
     } else {
