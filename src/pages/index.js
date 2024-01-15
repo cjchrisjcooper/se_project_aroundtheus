@@ -43,11 +43,10 @@ const createCard = (cardData) => {
             console.log("The delete card function is being called");
             // delete the card element
             card.deleteCard();
-
-            deleteCardForm.close();
           })
-          .finally(() => {
-            deleteCardForm.renderLoading(true, "Yes");
+          .then(() => {
+            deleteCardForm.renderLoading(false);
+            deleteCardForm.close();
           })
           .catch((res) => {
             console.log(`There is an error in the program: ${res}`);
@@ -89,6 +88,7 @@ const createCard = (cardData) => {
 const addCardObject = {
   popupSelector: "#add-card-modal",
   handleFormSubmit: (inputValues) => {
+    addCardForm.renderLoading(true, "Saving...");
     api
       .addCard(inputValues.name, inputValues.link)
       .then((res) => {
@@ -98,9 +98,10 @@ const addCardObject = {
         // addCardForm.popupForm.reset();
         // addCardFormValidator.toggleButtonState();
         cardSelection.addItem(cardElement);
-        addCardForm.close();
       })
-      .finally(() => {
+      .then(() => {
+        addCardForm.renderLoading(false);
+        addCardForm.close();
         addCardForm.popupForm.reset();
         addCardFormValidator.toggleButtonState();
       })
@@ -113,7 +114,7 @@ const addCardObject = {
 const editProfileObject = {
   popupSelector: "#edit-modal",
   handleFormSubmit: (inputValues) => {
-    editProfileForm.renderLoading("true", "Saving...");
+    editProfileForm.renderLoading(true, "Saving...");
     api
       .editProfile(inputValues.profileName, inputValues.profileJob)
       .then((res) => {
@@ -124,8 +125,8 @@ const editProfileObject = {
 
         console.log(res);
       })
-      .finally(() => {
-        editProfileForm.renderLoading("true", "Save");
+      .then((res) => {
+        editProfileForm.renderLoading(false);
         editProfileForm.popupForm.reset();
         editProfileFormValidator.toggleButtonState();
         editProfileForm.close();
@@ -143,7 +144,7 @@ const deleteCardObject = {
 const editAvatarObject = {
   popupSelector: "#edit-profile-avatar-modal",
   handleFormSubmit: (inputValues) => {
-    editProfileAvatarForm.renderLoading("true", "Saving...");
+    editProfileAvatarForm.renderLoading(true, "Saving...");
     api
       .updateProfilePicture(inputValues.avatar)
       .then((res) => {
@@ -151,11 +152,11 @@ const editAvatarObject = {
 
         console.log(res);
       })
-      .finally(() => {
+      .then(() => {
         editProfileAvatarForm.close();
         editProfileAvatarForm.popupForm.reset();
         editAvatarFormValidator.toggleButtonState();
-        editProfileAvatarForm.renderLoading("true", "Save");
+        editProfileAvatarForm.renderLoading(false);
       })
       .catch((res) => {
         console.log(`There is an error in the program: ${res}`);

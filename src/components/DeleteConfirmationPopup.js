@@ -8,6 +8,7 @@ export default class DeleteConfirmationPopup extends Popup {
     this._modalDeleteButton = this._popupElement.querySelector(
       ".modal__save-button"
     );
+    this._modalDeleteButtonDefaultText = this._modalDeleteButton.textContent;
   }
 
   setSubmitAction(action) {
@@ -35,7 +36,7 @@ export default class DeleteConfirmationPopup extends Popup {
     if (isLoading == true) {
       this._modalDeleteButton.textContent = loadingText;
     } else {
-      this._modalDeleteButton.textContent = this._modalDeleteButton;
+      this._modalDeleteButton.textContent = this._modalDeleteButtonDefaultText;
     }
   }
 }

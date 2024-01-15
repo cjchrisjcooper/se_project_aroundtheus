@@ -9,6 +9,7 @@ export default class PopupWithForm extends Popup {
     this._submitButtonText = this._popupElement.querySelector(
       ".modal__save-button"
     );
+    this._modalSaveButtonDefaultText = this._submitButtonText.textContent;
   }
 
   _getInputValues() {
@@ -23,11 +24,13 @@ export default class PopupWithForm extends Popup {
   }
 
   renderLoading(isLoading, loadingText = "Saving...") {
-    console.log(loadingText + " is the value of isLoading");
+    console.log(
+      this._modalSaveButtonDefaultText + " is the value of the default text"
+    );
     if (isLoading) {
       this._submitButtonText.textContent = loadingText;
     } else {
-      this._submitButtonText.textContent = this._submitButtonText;
+      this._submitButtonText.textContent = this._modalSaveButtonDefaultText;
     }
   }
 
