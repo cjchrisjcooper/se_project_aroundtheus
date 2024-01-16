@@ -77,7 +77,7 @@ export default class FormValidator {
   enableValidation() {
     console.log("this function is being called");
     this._formElement.addEventListener("submit", (evt) => {
-      this.toggleButtonState();
+      // this.toggleButtonState();
       evt.preventDefault();
     });
     this._setEventListeners();

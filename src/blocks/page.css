@@ -48,6 +48,11 @@
   transition: visibility 0s linear 0.5s, opacity 0.5s linear;
 }
 
+.visible {
+  visibility: visible;
+  opacity: 1;
+}
+
 /* .image-modal {
   position: fixed;
   top: 0;

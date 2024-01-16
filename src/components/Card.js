@@ -1,24 +1,51 @@
 //"Components" has been renamed to "components in github"
 //my computer throws an error when I import in "index.js"
 export default class Card {
-  constructor(data, cardSelector, handleImageClick) {
-    this.name = data.name;
-    this.link = data.link;
+  constructor(
+    { isLiked, name, link, _id },
+    cardSelector,
+    handleImageClick,
+    openDeleteForm,
+    addLikeButton,
+    removeLikeButton
+  ) {
+    this.name = name;
+    this.link = link;
+    this.isLiked = isLiked;
+    this.id = _id;
     this.cardSelector = cardSelector;
     this._handleImageClick = handleImageClick;
+    this._addLikeButton = addLikeButton;
+    this._removeLikeButton = removeLikeButton;
+    this.openDeleteForm = openDeleteForm;
   }
 
   _setEventListeners() {
+    // if (this.isLiked == true) {
+    //   this.addLikeButtonElement();
+    // } else {
+    //   this.removeLikeButtonElement();
+    // }
     //.card__like-button
     this.likeButton.addEventListener("click", () => {
-      this._handleLikeButton();
+      if (this.isLiked == false) {
+        console.log("the person has liked this post");
+        this._addLikeButton(this);
+        // this.addLikeButtonElement();
+      } else {
+        console.log("the person has doesn't like this post");
+        this._removeLikeButton(this);
+        // this.removeLikeButtonElement();
+      }
     });
     //.card__delete-button
     const deleteButton = this._cardElement.querySelector(
       ".card__delete-button"
     );
     deleteButton.addEventListener("click", () => {
-      this._handleDeleteButton();
+      console.log("button is being pressed");
+      this.openDeleteForm(this);
+      // this._handleCardDelete(this.id);
     });
     //.card__image
     this.cardImageElement.addEventListener("click", () => {
@@ -26,13 +53,27 @@ export default class Card {
     });
   }
 
-  _handleDeleteButton() {
-    this._cardElement.remove();
-    this._cardElement = null;
+  _likeStatus() {
+    if (this.isLiked) {
+      this._removeLikeButton(this);
+    } else {
+      this._addLikeButton(this);
+    }
+  }
+  addLikeButtonElement() {
+    this.likeButton.classList.add("card__like-button_active");
+  }
+  removeLikeButtonElement() {
+    this.likeButton.classList.remove("card__like-button_active");
   }
 
-  _handleLikeButton() {
+  _toggleLikeButton() {
     this.likeButton.classList.toggle("card__like-button_active");
+  }
+
+  deleteCard() {
+    this._cardElement.remove();
+    this._cardElement = null;
   }
 
   getView() {
@@ -49,6 +90,11 @@ export default class Card {
     this.cardImageElement.setAttribute("src", this.link);
     this.cardImageElement.setAttribute("alt", this.name);
     this.cardTitleElement.textContent = this.name;
+    if (this.isLiked == true) {
+      this.addLikeButtonElement();
+    } else {
+      this.removeLikeButtonElement();
+    }
     return this._cardElement;
   }
 }
