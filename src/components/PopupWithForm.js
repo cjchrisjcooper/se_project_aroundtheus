@@ -6,10 +6,10 @@ export default class PopupWithForm extends Popup {
     this.popupForm = this._popupElement.querySelector(".modal__form");
     this._handFormSubmit = handleFormSubmit;
     console.log(this._popupForm);
-    this._submitButtonText = this._popupElement.querySelector(
+    this._submitButton = this._popupElement.querySelector(
       ".modal__save-button"
     );
-    this._modalSaveButtonDefaultText = this._submitButtonText.textContent;
+    this._modalSaveButtonDefaultText = this._submitButton.textContent;
   }
 
   _getInputValues() {
@@ -28,9 +28,9 @@ export default class PopupWithForm extends Popup {
       this._modalSaveButtonDefaultText + " is the value of the default text"
     );
     if (isLoading) {
-      this._submitButtonText.textContent = loadingText;
+      this._submitButton.textContent = loadingText;
     } else {
-      this._submitButtonText.textContent = this._modalSaveButtonDefaultText;
+      this._submitButton.textContent = this._modalSaveButtonDefaultText;
     }
   }
 

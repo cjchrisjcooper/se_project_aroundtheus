@@ -15,14 +15,6 @@ export default class DeleteConfirmationPopup extends Popup {
     this._handleFormSubmit = action;
   }
 
-  setDefaultText() {
-    this._modalDeleteButton.textContent = "Yes";
-  }
-
-  setDeleteText() {
-    this._modalDeleteButton.textContent = "Deleting...";
-  }
-
   setEventListeners() {
     super.setEventListeners();
     this.popupForm.addEventListener("submit", (evt) => {
