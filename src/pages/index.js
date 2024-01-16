@@ -45,8 +45,10 @@ const createCard = (cardData) => {
             card.deleteCard();
           })
           .then(() => {
-            deleteCardForm.renderLoading(false);
             deleteCardForm.close();
+          })
+          .finally(() => {
+            deleteCardForm.renderLoading(false);
           })
           .catch((res) => {
             console.log(`There is an error in the program: ${res}`);
@@ -100,10 +102,12 @@ const addCardObject = {
         cardSelection.addItem(cardElement);
       })
       .then(() => {
-        addCardForm.renderLoading(false);
         addCardForm.close();
         addCardForm.popupForm.reset();
         addCardFormValidator.toggleButtonState();
+      })
+      .finally(() => {
+        addCardForm.renderLoading(false);
       })
       .catch((res) => {
         console.log(`There is an error in the program: ${res}`);
@@ -126,10 +130,12 @@ const editProfileObject = {
         console.log(res);
       })
       .then((res) => {
-        editProfileForm.renderLoading(false);
         editProfileForm.popupForm.reset();
         editProfileFormValidator.toggleButtonState();
         editProfileForm.close();
+      })
+      .finally(() => {
+        editProfileForm.renderLoading(false);
       })
       .catch((res) => {
         console.log(`There is an error in the program: ${res}`);
@@ -156,11 +162,43 @@ const editAvatarObject = {
         editProfileAvatarForm.close();
         editProfileAvatarForm.popupForm.reset();
         editAvatarFormValidator.toggleButtonState();
+      })
+      .finally(() => {
         editProfileAvatarForm.renderLoading(false);
       })
       .catch((res) => {
         console.log(`There is an error in the program: ${res}`);
       });
+  },
+};
+
+const editAvatarObjectHandleSubmit = {
+  popupSelector: "#edit-profile-avatar-modal",
+  handleFormSubmit: (inputValues) => {
+    handleSubmit(
+      () => {
+        api
+          .updateProfilePicture(inputValues.avatar)
+          .then((res) => {
+            userProfile.setUserAvatar(inputValues.avatar);
+
+            console.log(res);
+          })
+          .then(() => {
+            editProfileAvatarForm.close();
+            editProfileAvatarForm.popupForm.reset();
+            editAvatarFormValidator.toggleButtonState();
+          })
+          .finally(() => {
+            editProfileAvatarForm.renderLoading(false);
+          })
+          .catch((res) => {
+            console.log(`There is an error in the program: ${res}`);
+          });
+      },
+      editProfileAvatarForm,
+      "Saving..."
+    );
   },
 };
 //---------------------------------------------------------------------------------------------------------------------
