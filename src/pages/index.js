@@ -176,7 +176,7 @@ const editAvatarObjectHandleSubmit = {
   popupSelector: "#edit-profile-avatar-modal",
   handleFormSubmit: (inputValues) => {
     handleSubmit(
-      () => {
+      function handleAvatar() {
         api
           .updateProfilePicture(inputValues.avatar)
           .then((res) => {
