@@ -18,11 +18,21 @@
         </header>
         <main>
           <section class="profile page__profile">
-            <img
-              src="<%=require('./images/profile-picture.jpg')%>"
-              alt="Profile picture"
-              class="profile__picture"
-            />
+            <div class="profile__picture">
+              <img
+                src="<%=require('./images/profile-picture.jpg')%>"
+                alt="Profile picture"
+                class="profile__picture_image"
+              />
+              <div class="profile-edit">
+                <img
+                  src="<%=require('./images/Edit-Pic-Vector.svg')%>"
+                  alt="edit-profile"
+                  class="profile-edit-pic"
+                />
+              </div>
+            </div>
+
             <div class="profile__info">
               <h1 class="profile__header">Jacques Cousteau</h1>
               <button class="profile__edit-button" type="button"></button>
@@ -99,6 +109,37 @@
             <button class="modal__close-button" type="button"></button>
           </form>
         </div>
+      </div>
+      <!-- Delete card Modal -->
+      <div class="modal page__modal" id="delete-card-modal">
+        <div class="modal__container">
+          <form class="modal__form" id="delete-card-form">
+            <h2 class="modal__title">Are you Sure?</h2>
+            <button class="modal__save-button">Yes</button>
+            <button class="modal__close-button" type="button"></button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- edit profile avatar modal-->
+    <div class="modal page__modal" id="edit-profile-avatar-modal">
+      <div class="modal__container">
+        <form class="modal__form" id="add-card-form">
+          <h2 class="modal__title">Change Profile Picture</h2>
+          <input
+            type="url"
+            class="modal__input modal__input-title modal__input-title_type_title"
+            id="avatar"
+            placeholder="Image-URL"
+            minlength="1"
+            maxlength="120"
+            name="avatar"
+            required
+          />
+          <span class="modal__error" id="avatar-error"></span>
+          <button class="modal__save-button">Save</button>
+          <button class="modal__close-button" type="button"></button>
+        </form>
       </div>
     </div>
     <!-- image modal -->

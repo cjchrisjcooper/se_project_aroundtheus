@@ -5,11 +5,41 @@
 }
 
 .profile__picture {
+  position: relative;
   border-radius: 60%;
   width: 120px;
   height: 120px;
   margin-right: 26px;
   flex-shrink: 0;
+}
+.profile__picture:hover .profile-edit {
+  visibility: visible;
+}
+
+.profile__picture:hover .profile__picture_image {
+  opacity: 0.8;
+}
+
+.profile__picture_image {
+  border-radius: 60%;
+  width: 120px;
+  height: 120px;
+}
+
+.profile-edit {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  top: 40%;
+  left: 40%;
+  height: 26px;
+  width: 26px;
+  visibility: hidden;
+}
+
+.profile-edit-pic {
+  width: 26px;
+  height: 26px;
 }
 
 .profile__info {

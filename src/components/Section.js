@@ -5,10 +5,10 @@ export default class Section {
     this._element = document.querySelector(`.${classSelector}`);
   }
 
-  renderItems(data) {
+  renderItems() {
     //use this._renderer to render items to the this._element
     console.log("render Items is being called");
-    data.forEach((item) => {
+    this._items.forEach((item) => {
       this._renderer(item);
     });
   }
